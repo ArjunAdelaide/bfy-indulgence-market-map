@@ -1,7 +1,7 @@
 """
-Better-for-You Indulgence: clickable market map (the main page).
+Better-for-You Indulgence: list view of the market map (the main page is build_system.py).
 
-Reads data/companies.json and emits docs/index.html: a landscape grid of the six
+Reads data/companies.json and emits docs/list.html: a landscape grid of the six
 consumer need-states, split US / Australia, where every company is a tile that
 opens an investor dossier. Dossiers deep-link via the URL hash (e.g. /#noon).
 Also has a sortable table view and the one-page thesis. Space styling: starfield
@@ -16,7 +16,7 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 DATA = ROOT / "data" / "companies.json"
 SPACE_SRC = ROOT / "build_map.py"
-OUT = ROOT / "docs" / "index.html"
+OUT = ROOT / "docs" / "list.html"
 SITE = "https://arjunadelaide.github.io/bfy-indulgence-market-map/"
 MEMO = "BFY-Indulgence-Memo-Arjun-Kulshrestha.pdf"
 REPO = "https://github.com/ArjunAdelaide/bfy-indulgence-market-map"
@@ -241,7 +241,7 @@ TEMPLATE = r"""<!DOCTYPE html>
     <nav class="links">
       <a href="#thesis">Thesis</a>
       <a href="__MEMO__" target="_blank" rel="noopener">Memo</a>
-      <a class="hide-sm" href="space.html">3D</a>
+      <a href="./">System</a>
       <a class="hide-sm" href="__REPO__" target="_blank" rel="noopener">Source</a>
     </nav>
   </div>
