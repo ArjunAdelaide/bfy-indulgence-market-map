@@ -22,13 +22,13 @@ consumer need-states, each with positioning, channels, a funding or scale signal
 ## How to read the map in 30 seconds
 
 - **Columns are need-states, not aisles.** "I refuse to give up sweets", not "low-sugar confectionery". Click a column header for the segment view (why it matters, maturity, risks).
-- **Bars** = scale signal from 1 to 5 (revenue / funding). **Breakout** = growth in flight. **Exited** = acquired, kept as a pricing comp.
+- **Planet size** = scale signal (revenue / funding). **Pulse** = breakout in flight. **Ring** = exited, kept as a pricing comp.
 - In a dossier, use the arrow keys or the arrow buttons to step through companies, `Esc` to close, and **Copy link** to share it.
 
 ## Changelog
 
 **September 2026**
-- Rebuilt the main page as a clickable 2D market map with dossiers, filters, search, a table view and deep links. The 3D version is kept as the space view.
+- Rebuilt the main page as a clickable, minimal space-style market map (starfield, planets sized by scale) with dossiers, filters, search, a table view and deep links. The 3D version is kept as the space view.
 - Added **NOON** (Protein as Pleasure): the Australian liquid-breakfast brand that launched nationally in
   Woolworths in January 2026, then in about 2,000 US Target stores in August 2026 on a $2.5M pre-seed led by BFG Partners.
 - Updated **David**: parent Medici Brands raised a $250M Series B at a $2.25B valuation (2 Sep 2026), up from $725M
