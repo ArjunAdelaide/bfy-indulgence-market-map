@@ -2,7 +2,7 @@
 """
 Better-for-You Indulgence: interactive 3D space market map generator.
 
-Reads data/companies.json and emits docs/index.html: a WebGL (three.js)
+Reads data/companies.json and emits docs/space.html (the secondary "space view"; the main page is build_landscape.py): a WebGL (three.js)
 universe. Each consumer need-state is a glowing element star; click one and
 the camera flies into its system, where companies orbit as lit, textured
 planets. Click a planet for a full-screen, SpaceX-style company page.
@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 DATA = ROOT / "data" / "companies.json"
-OUT = ROOT / "docs" / "index.html"
+OUT = ROOT / "docs" / "space.html"
 
 TEMPLATE = r"""<!DOCTYPE html>
 <html lang="en">
@@ -221,6 +221,7 @@ TEMPLATE = r"""<!DOCTYPE html>
     <div class="sub">__SUBTITLE__ · UPDATED __UPDATED__</div>
   </div>
   <div class="spacer"></div>
+  <a class="btn" href="./" style="text-decoration:none">&larr; Market map</a>
   <button class="btn" id="btn-thesis">Thesis</button>
   <button class="btn" id="btn-howto">How to read</button>
   <button class="btn hidden" id="btn-back">&larr; Universe</button>
