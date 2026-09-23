@@ -62,6 +62,8 @@
   .enter .line::after { content: ""; position: absolute; left: 0; width: 1px; height: 14px; background: #fff; animation: drip 2.2s ease-in-out infinite; }
   @keyframes drip { from { top: -14px; } to { top: 46px; } }
 
+  .horizon { position: absolute; left: 50%; bottom: 0; width: max(100vw, 175vh); height: auto; z-index: 1; pointer-events: none;
+             transform: translate(-50%, calc(9% + var(--p) * 55%)); opacity: clamp(0, calc(1 - var(--p) * 2.4), 1); }
   .system { position: absolute; left: 50%; top: 50%; width: min(96vw, 96vh); height: min(96vw, 96vh); transform: translate(-50%, -50%); z-index: 2; }
   .system svg { width: 100%; height: 100%; overflow: visible; display: block; }
   .orbit { fill: none; stroke-width: 1; transition: opacity .35s, stroke-width .35s; }
@@ -77,9 +79,9 @@
   @keyframes pulse { from { transform: scale(1); opacity: .9; } to { transform: scale(2.2); opacity: 0; } }
   .dim { opacity: .12; }
   .sun { cursor: pointer; }
-  .sun-core { transition: r .3s; }
-  .sun:hover .sun-core { r: 30; }
-  .sun-lbl { font: 500 10px var(--mono); letter-spacing: .28em; fill: #1a1206; pointer-events: none; }
+  .sun-core { transform-box: fill-box; transform-origin: center; transition: transform .4s cubic-bezier(.2,.8,.2,1); }
+  .sun:hover .sun-core { transform: scale(1.12); }
+  .sun-lbl { font: 600 11px var(--mono); letter-spacing: .2em; fill: rgba(40,8,0,.82); pointer-events: none; }
 
   /* legend + bar fade in once the system has assembled */
   .ui { opacity: clamp(0, calc((var(--p) - .82) * 6), 1); transition: opacity .2s; }
@@ -88,7 +90,8 @@
   .legend button { display: grid; grid-template-columns: 14px 1fr auto; align-items: center; gap: 12px; width: 250px; text-align: left; background: none; border: 0; padding: 9px 0; cursor: pointer; color: var(--muted); border-bottom: 1px solid var(--hair); transition: color .2s; }
   .legend button:last-child { border-bottom: 0; }
   .legend button:hover, .legend button.on { color: var(--text); }
-  .legend .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--c); box-shadow: 0 0 10px var(--c); }
+  .legend .dot { width: 16px; height: 16px; margin-left: -4px; }
+  .legend button { grid-template-columns: 16px 1fr auto !important; }
   .legend .nm { font: 400 14px var(--display); letter-spacing: -.005em; }
   .legend .ct { font: 500 10px var(--mono); color: var(--faint); letter-spacing: .1em; }
   .legend .hd { color: var(--faint); margin-bottom: 8px; }
@@ -99,7 +102,9 @@
   .bar .sep { width: 1px; height: 12px; background: var(--hair-2); }
   .keys { position: absolute; right: 30px; bottom: 30px; z-index: 4; display: flex; flex-direction: column; gap: 10px; color: var(--faint); }
   .keys span { display: flex; align-items: center; gap: 10px; justify-content: flex-end; }
-  .keys svg { overflow: visible; }
+  .keys img { display: block; }
+  .keys .kp { position: relative; display: block; }
+  .keys .kp::after { content: ""; position: absolute; inset: -2px; border-radius: 50%; border: 1px solid #ff6b35; animation: pulse 2.6s ease-out infinite; }
 
   footer { position: relative; z-index: 1; padding: 90px 30px 70px; text-align: center; color: var(--faint); }
   footer p { margin: 8px 0; }
@@ -120,8 +125,8 @@
   .d-body::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 240px; pointer-events: none; background: radial-gradient(420px 170px at 40px 0, color-mix(in srgb, var(--c) 20%, transparent), transparent 75%); }
   .d-kick { position: relative; color: var(--c); margin-bottom: 22px; }
   .d-head { display: flex; align-items: center; gap: 18px; position: relative; }
-  .orb { flex: none; border-radius: 50%; width: 36px; height: 36px; background: radial-gradient(circle at 32% 30%, #fff 0 7%, var(--c) 45%, color-mix(in srgb, var(--c) 35%, #000) 100%); box-shadow: 0 0 26px color-mix(in srgb, var(--c) 50%, transparent); }
-  .orb.exited { background: transparent; box-shadow: none; border: 1.5px solid var(--c); }
+  .orb { flex: none; width: 58px; height: 58px; margin: -8px -4px -8px -10px; object-fit: contain; filter: drop-shadow(0 0 18px color-mix(in srgb, var(--c) 45%, transparent)); }
+  .orb.exited { width: 74px; height: 74px; margin: -16px -12px -16px -18px; }
   .d-body h2 { font: 400 38px/1.05 var(--display); letter-spacing: -.03em; margin: 0; }
   .d-tags { color: var(--faint); margin: 16px 0 26px; }
   .d-pos { font: 300 20px/1.45 var(--display); margin: 0 0 30px; letter-spacing: -.01em; }
@@ -139,7 +144,7 @@
   .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
   .chip { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(255,255,255,.02); border: 1px solid var(--hair); border-radius: 999px; padding: 5px 12px 5px 9px; font-size: 13px; transition: border-color .2s, background .2s; }
   .chip:hover { border-color: color-mix(in srgb, var(--c) 60%, transparent); background: color-mix(in srgb, var(--c) 8%, transparent); }
-  .chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+  .chip img { width: 16px; height: 16px; margin: -3px 0 -3px -2px; object-fit: contain; }
   .chip small { font: 500 9px var(--mono); letter-spacing: .12em; color: var(--faint); }
   .thesis-item { padding: 18px 0; border-bottom: 1px solid var(--hair); }
   .thesis-item h3 { font: 500 16px var(--display); margin: 0 0 6px; }
@@ -193,6 +198,7 @@
       <button class="enter mono" id="enter">Enter the system<span class="line"></span></button>
     </div>
 
+    <img class="horizon" src="img/horizon.webp" alt="" aria-hidden="true">
     <div class="system"><svg id="sys" viewBox="-500 -500 1000 1000" role="group" aria-label="Solar system market map"></svg></div>
 
     <div class="legend ui off" id="legend"><div class="mono hd">Need-states</div></div>
@@ -208,9 +214,9 @@
     </div>
 
     <div class="keys ui off mono">
-      <span>Size = scale <svg width="22" height="10"><circle cx="3" cy="5" r="2.5" fill="#8d97b3"/><circle cx="16" cy="5" r="5" fill="#8d97b3"/></svg></span>
-      <span>Breakout <svg width="10" height="10"><circle cx="5" cy="5" r="3.5" fill="#8d97b3"/><circle cx="5" cy="5" r="5" fill="none" stroke="#8d97b3"/></svg></span>
-      <span>Exited <svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="none" stroke="#8d97b3" stroke-width="1.3"/></svg></span>
+      <span>Size = scale <img src="img/p-drinks-1.webp" width="12" height="12" alt=""><img src="img/p-drinks-1.webp" width="22" height="22" alt=""></span>
+      <span>Breakout <span class="kp"><img src="img/p-protein-0.webp" width="18" height="18" alt=""></span></span>
+      <span>Exited <img src="img/x-drinks.webp" width="30" height="30" alt="" style="margin:-6px -6px -6px 0"></span>
       <span>Tap the sun for the thesis</span>
     </div>
   </div>
@@ -248,6 +254,13 @@ const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;"
 const pad = n => String(n).padStart(2, "0");
 const CO = DATA.companies.map(c => ({ ...c, id: slug(c.name) }));
 CO.sort((a, b) => segById[a.galaxy].n - segById[b.galaxy].n || b.scale - a.scale || a.name.localeCompare(b.name));
+// Blender renders (render/render_assets.py): sprites are lit from the left; the disk fills
+// 80% of a planet sprite and 50% of a ringed (exited) sprite
+SEGS.forEach(g => CO.filter(c => c.galaxy === g.id).forEach((c, k) => {
+  c.img = c.status === "exited" ? `img/x-${g.id}.webp` : `img/p-${g.id}-${k % 3}.webp`;
+  c.k = c.status === "exited" ? 2.0 : 1.25;
+}));
+const segImg = g => `img/p-${g.id}-0.webp`;
 const byId = Object.fromEntries(CO.map(c => [c.id, c]));
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const NS = "http://www.w3.org/2000/svg";
@@ -256,8 +269,6 @@ const el = (tag, attrs = {}, parent) => { const e = document.createElementNS(NS,
 /* ---------- build the system: fewer companies on inner orbits ---------- */
 const svg = document.getElementById("sys");
 const defs = el("defs", {}, svg);
-const sunGrad = el("radialGradient", { id: "sunG" }, defs);
-[["0", "#fff6e6"], ["0.35", "#ffd08a"], ["0.7", "#ff9a3c"], ["1", "#ff6b1a"]].forEach(([o, c]) => el("stop", { offset: o, "stop-color": c }, sunGrad));
 const glowGrad = el("radialGradient", { id: "glowG" }, defs);
 [["0", "rgba(255,190,120,.55)"], ["0.4", "rgba(255,150,80,.14)"], ["1", "rgba(255,120,60,0)"]].forEach(([o, c]) => el("stop", { offset: o, "stop-color": c }, glowGrad));
 
@@ -275,25 +286,23 @@ const planets = [];
 ringOrder.forEach(g => {
   const list = CO.filter(c => c.galaxy === g.id);
   list.forEach((c, k) => {
-    const r = 4.5 + c.scale * 1.9;
+    const r = 6.5 + c.scale * 2.6;
     const grp = el("g", { class: "planet-g", tabindex: 0, role: "button", "aria-label": `${c.name}, ${g.name}`, "data-id": c.id }, planetG);
     el("circle", { class: "hit", r: Math.max(r + 8, innerWidth < 700 ? 30 : 16) }, grp);
     if (c.status === "breakout") el("circle", { class: "pulse", r: r + 2, stroke: g.color }, grp);
-    const body = el("circle", c.status === "exited"
-      ? { class: "body", r, fill: "#000", stroke: g.color, "stroke-width": 1.6 }
-      : { class: "body", r, fill: g.color }, grp);
-    if (c.status !== "exited") el("circle", { r: r * .45, cx: -r * .3, cy: -r * .3, fill: "#fff", opacity: .35 }, grp);
+    const face = el("g", { class: "face" }, grp);
+    el("image", { href: c.img, x: -r * c.k, y: -r * c.k, width: 2 * r * c.k, height: 2 * r * c.k }, face);
     el("circle", { class: "ring-focus", r: r + 5 }, grp);
     const lbl = el("text", { class: "lbl", x: r + 7, y: 4 }, grp);
     lbl.textContent = c.name;
-    planets.push({ c, g, grp, a0: g.phase + (k / list.length) * Math.PI * 2, delay: 0 });
+    planets.push({ c, g, grp, face, a0: g.phase + (k / list.length) * Math.PI * 2, delay: 0 });
   });
 });
 planets.forEach((p, i) => p.delay = i / planets.length);
 const sun = el("g", { class: "sun", tabindex: 0, role: "button", "aria-label": "Open the thesis" }, svg);
 el("circle", { r: 40, fill: "transparent" }, sun);
-el("circle", { class: "sun-core", r: 26, fill: "url(#sunG)" }, sun);
-const sunTxt = el("text", { class: "sun-lbl", "text-anchor": "middle", y: 4 }, sun); sunTxt.textContent = CO.length;
+const sunBody = el("g", { class: "sun-core" }, sun);
+const sunImg = el("image", { href: "img/sun.webp", x: -30, y: -30, width: 60, height: 60 }, sunBody);
 
 /* ---------- scroll-driven assembly ---------- */
 const stage = document.getElementById("stage"), root = document.documentElement;
@@ -324,11 +333,13 @@ function applyProgress() {
 /* ---------- motion: slow Kepler-ish rotation, paused while you hover or read ---------- */
 let rot = 0, last = 0, paused = false, hoverId = null;
 function place() {
+  sunImg.setAttribute("transform", `rotate(${(rot * 1.5).toFixed(2)})`);
   planets.forEach(p => {
     const a = p.a0 + rot * p.g.speed * 60;
     const rr = p.g.r * (0.35 + 0.65 * p.t);
     const x = Math.cos(a) * rr, y = Math.sin(a) * rr;
     p.grp.setAttribute("transform", `translate(${x.toFixed(2)} ${y.toFixed(2)})`);
+    p.face.setAttribute("transform", `rotate(${(a * 57.2958).toFixed(1)})`);   // lit side faces the sun
     p.grp.style.opacity = p.grp.classList.contains("dim") ? "" : p.t;
   });
 }
@@ -361,7 +372,7 @@ document.getElementById("bar").addEventListener("click", e => {
 const legend = document.getElementById("legend"), mlegend = document.getElementById("mlegend");
 SEGS.forEach(g => {
   const n = CO.filter(c => c.galaxy === g.id).length;
-  legend.insertAdjacentHTML("beforeend", `<button data-seg="${g.id}" style="--c:${g.color}"><span class="dot"></span><span class="nm">${esc(g.name)}</span><span class="ct">${n}</span></button>`);
+  legend.insertAdjacentHTML("beforeend", `<button data-seg="${g.id}" style="--c:${g.color}"><img class="dot" src="${segImg(g)}" alt=""><span class="nm">${esc(g.name)}</span><span class="ct">${n}</span></button>`);
   mlegend.insertAdjacentHTML("beforeend", `<button data-seg="${g.id}" style="--c:${g.color}"><i></i>${esc(g.name)}</button>`);
 });
 [legend, mlegend].forEach(L => {
@@ -382,7 +393,7 @@ function confidence(sig) {
   return ["reported", "Company-reported"];
 }
 const row = (h, p) => `<div class="d-row"><h4>${h}</h4><p>${esc(p)}</p></div>`;
-const chips = list => `<div class="chips">${list.map(p => `<button type="button" class="chip" data-id="${p.id}" style="--c:${segById[p.galaxy].color}"><i></i>${esc(p.name)}<small>${GEO_SHORT[p.geo]}</small></button>`).join("")}</div>`;
+const chips = list => `<div class="chips">${list.map(p => `<button type="button" class="chip" data-id="${p.id}" style="--c:${segById[p.galaxy].color}"><img src="${p.img}" alt="">${esc(p.name)}<small>${GEO_SHORT[p.geo]}</small></button>`).join("")}</div>`;
 function sources(list) {
   return `<ul class="src">${list.map(u => { let h = u; try { h = new URL(u).hostname.replace(/^www\./, ""); } catch (e) {} return `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(h)} &nearr;</a></li>`; }).join("")}</ul>`;
 }
@@ -390,7 +401,7 @@ const VIEWS = {
   company(c) {
     const g = segById[c.galaxy], [cls, label] = confidence(c.signal);
     return { color: g.color, title: c.name, html: `<div class="mono d-kick">${pad(g.n)} &middot; ${esc(g.name)}</div>
-      <div class="d-head"><span class="orb ${c.status}"></span><h2 id="d-title">${esc(c.name)}</h2></div>
+      <div class="d-head"><img class="orb ${c.status}" src="${c.img}" alt=""><h2 id="d-title">${esc(c.name)}</h2></div>
       <div class="mono d-tags">${GEO[c.geo]} &middot; ${STATUS[c.status]} &middot; Scale ${c.scale} / 5</div>
       <p class="d-pos">${esc(c.positioning)}</p>
       <div class="d-list">${row("Product", c.product)}${row("Target", c.target)}${row("Edge", c.differentiation)}${row("Channels", c.channels)}
@@ -401,7 +412,7 @@ const VIEWS = {
   },
   segment(g) {
     return { color: g.color, title: g.name, html: `<div class="mono d-kick">Orbit ${pad(g.n)} / ${pad(SEGS.length)}</div>
-      <div class="d-head"><span class="orb" style="width:18px;height:18px"></span><h2 id="d-title">${esc(g.name)}</h2></div>
+      <div class="d-head"><img class="orb" src="${segImg(g)}" alt=""><h2 id="d-title">${esc(g.name)}</h2></div>
       <div class="mono d-tags">${esc(g.maturity)} &middot; VC appeal: ${esc(g.vc_attractiveness)}</div>
       <p class="d-pos">&ldquo;${esc(g.need_state)}&rdquo;</p>
       <div class="d-list">${row("Why it matters", g.why_care)}${row("Risks", g.risks)}</div>

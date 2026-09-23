@@ -17,6 +17,7 @@ consumer need-states, each with positioning, channels, a funding or scale signal
 | `docs/BFY-Indulgence-Memo-Arjun-Kulshrestha.pdf` | **13-page memo** in the same visual language: thesis, category definition, 7 consumer segments, taxonomy, competitive dynamics, 10 white spaces, bear case, investor lens, personal conviction, full company appendix with sources. |
 | `data/companies.json` | The company database: 31 brands (16 AU, 13 US, 2 Canada) with funding and scale signals flagged as verified, company-reported or estimate, plus source links. |
 | `build_system.py` | Generates the main page. `python3 build_system.py` |
+| `render/render_assets.py` | Renders the imagery in Blender (Cycles): a planet per company style, ringed planets for exits, the sun, and the landing-page horizon, written to `docs/img/`. `blender -b -P render/render_assets.py -- all` |
 | `build_landscape.py` | Generates the list view. `python3 build_landscape.py` |
 | `build_map.py` | Generates the space view; also holds the thesis copy both pages use. `python3 build_map.py` |
 | `build_memo.py` | Generates the memo PDF (requires `reportlab`). `python3 build_memo.py` |
@@ -30,6 +31,7 @@ consumer need-states, each with positioning, channels, a funding or scale signal
 ## Changelog
 
 **September 2026**
+- Rendered the planets, sun and landing horizon in Blender. Each need-state has its own kind of world (gas giant, candy bands, ocean, rock, desert, terran); sprites are lit from one side and the page turns each one so its lit side faces the sun as it orbits.
 - Rebuilt the main page as a minimal landing page that assembles into a clickable 2D solar system, with dossiers, a thesis panel, an index, geo filters and deep links. The grid moved to the list view; the original 3D version is kept at `space.html`.
 - Added **NOON** (Protein as Pleasure): the Australian liquid-breakfast brand that launched nationally in
   Woolworths in January 2026, then in about 2,000 US Target stores in August 2026 on a $2.5M pre-seed led by BFG Partners.
