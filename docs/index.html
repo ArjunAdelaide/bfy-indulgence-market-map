@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Better-for-You Indulgence</title>
+<meta name="description" content="31 better-for-you food and beverage brands across the US and Australia, mapped by consumer need-state, with an investor memo. By Arjun Kulshrestha.">
+<meta property="og:title" content="Better-for-You Indulgence: a US + Australia market map">
+<meta property="og:description" content="31 better-for-you food and beverage brands across the US and Australia, mapped by consumer need-state, with an investor memo. By Arjun Kulshrestha.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arjunadelaide.github.io/bfy-indulgence-market-map/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+} }
+</script>
+<style>
+  :root {
+    --bg: #030509;
+    --line: #1c2747;
+    --text: #e8edf8;
+    --muted: #8b97b8;
+    --accent: #7aa2ff;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    --sans: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --display: "Space Grotesk", "Inter", -apple-system, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { color-scheme: dark; }
+  html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--sans); }
+  ::selection { background: rgba(122,162,255,.35); }
+
+  #scene, #labels { position: fixed; inset: 0; }
+  #scene { z-index: 1; }
+  #labels { z-index: 2; pointer-events: none; }
+
+  #vignette {
+    position: fixed; inset: 0; z-index: 10; pointer-events: none;
+    background: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(0,0,0,.5) 100%);
+  }
+
+  /* ---------- chrome ---------- */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+    display: flex; align-items: center; gap: 14px;
+    padding: calc(16px + env(safe-area-inset-top, 0px)) 26px 16px;
+    background: linear-gradient(180deg, rgba(3,5,9,.85), rgba(3,5,9,0));
+    pointer-events: none;
+  }
+  header > * { pointer-events: auto; }
+  .title-block h1 { font-family: var(--display); font-size: 14px; letter-spacing: .24em; text-transform: uppercase; font-weight: 700; }
+  .title-block .sub { font-size: 10.5px; color: var(--muted); font-family: var(--mono); letter-spacing: .08em; margin-top: 3px; }
+  .spacer { flex: 1; }
+  .btn {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--text); background: none; border: none; border-bottom: 1px solid transparent;
+    padding: 8px 4px; margin-left: 18px; cursor: pointer; transition: all .15s;
+  }
+  .btn:hover { color: #fff; border-bottom-color: rgba(255,255,255,.65); }
+  .btn.hidden { display: none; }
+
+  .crumb {
+    position: fixed; top: calc(64px + env(safe-area-inset-top, 0px)); left: 28px; z-index: 40;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .14em;
+    color: var(--muted); text-transform: uppercase;
+    text-shadow: 0 1px 8px rgba(3,5,9,.9);
+  }
+  .crumb b { color: var(--accent); font-weight: 600; }
+
+  .legend {
+    position: fixed; left: 28px; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); z-index: 40;
+    display: flex; align-items: center; gap: 16px;
+    font-family: var(--mono); font-size: 9px; letter-spacing: .16em; color: var(--muted);
+    text-transform: uppercase; text-shadow: 0 1px 8px rgba(3,5,9,.9);
+  }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+  .legend .lsep { width: 1px; height: 12px; background: rgba(140,160,210,.3); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; display: inline-block; }
+  .dot.us { background: #6ea8ff; } .dot.au { background: #ffc861; } .dot.na { background: #58d6c9; }
+
+  .hint {
+    position: fixed; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); right: 28px; z-index: 40;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .12em; color: var(--muted);
+    text-transform: uppercase; text-shadow: 0 1px 8px rgba(3,5,9,.9);
+  }
+  .hint::after { content: "\258D"; margin-left: 6px; color: var(--accent); animation: blink 1.2s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* ---------- 3D labels ---------- */
+  .e-label { text-align: center; pointer-events: auto; cursor: pointer; user-select: none; transform: translateY(8px); }
+  .e-label .k { font-family: var(--mono); font-size: 9px; letter-spacing: .3em; text-transform: uppercase; }
+  .e-label .n { font-family: var(--display); font-size: 17px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; margin-top: 5px; color: #f2f5fc; }
+  .e-label .d { font-size: 11px; color: var(--muted); max-width: 240px; margin: 5px auto 0; line-height: 1.5; }
+  .e-label .m { font-family: var(--mono); font-size: 8.5px; letter-spacing: .14em; color: var(--muted); margin-top: 6px; }
+  .e-label * { text-shadow: 0 1px 10px rgba(3,5,9,.95), 0 0 24px rgba(3,5,9,.8); }
+  .e-label:hover .n { color: #fff; }
+
+  .p-label { text-align: center; pointer-events: auto; cursor: pointer; user-select: none; transform: translateY(6px); }
+  .p-label .n {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 11.5px; font-weight: 600; color: #eef2fb; white-space: nowrap;
+    text-shadow: 0 1px 10px rgba(3,5,9,.95);
+  }
+  .p-label .n i { width: 6px; height: 6px; border-radius: 50%; flex: none; }
+  .p-label .g { font-family: var(--mono); font-size: 8px; letter-spacing: .22em; color: var(--muted); margin-top: 3px; text-shadow: 0 1px 8px rgba(3,5,9,.95); }
+
+  /* ---------- company page (full-screen, minimal) ---------- */
+  #company {
+    position: fixed; inset: 0; z-index: 55;
+    background: rgba(3,5,9,.93); backdrop-filter: blur(16px);
+    opacity: 0; pointer-events: none; transition: opacity .35s ease;
+    overflow-y: auto;
+  }
+  #company.open { opacity: 1; pointer-events: auto; }
+  #company .close { position: fixed; top: calc(18px + env(safe-area-inset-top, 0px)); right: 28px; z-index: 56; }
+  #company::-webkit-scrollbar { width: 5px; }
+  #company::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
+  .c-inner { max-width: 1020px; margin: 0 auto; padding: 110px 40px 90px; }
+  .c-kicker { font-family: var(--mono); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); }
+  .c-name {
+    font-family: var(--display); font-weight: 500; text-transform: uppercase;
+    font-size: clamp(40px, 7vw, 76px); line-height: 1.04; letter-spacing: .02em;
+    margin: 20px 0 16px;
+  }
+  .c-pos { font-size: 17px; line-height: 1.65; color: #c4d0ea; max-width: 640px; }
+  .c-rule { height: 1px; margin: 42px 0; }
+  .c-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 36px 44px; }
+  #company .k { font-family: var(--mono); font-size: 9px; letter-spacing: .26em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .c-field .v { font-size: 13.5px; line-height: 1.75; color: #dbe3f4; }
+  .c-signal { margin-top: 48px; }
+  .c-signal .v { font-size: 16px; line-height: 1.7; color: #eef2fb; max-width: 760px; }
+  .c-take { margin-top: 48px; padding-left: 28px; border-left: 1px solid rgba(255,255,255,.35); }
+  .c-take .v { font-family: var(--display); font-weight: 500; font-size: 19px; line-height: 1.6; color: #f2f5fc; max-width: 720px; }
+  .c-src { margin-top: 56px; }
+  .c-src a {
+    display: inline-block; margin: 0 26px 8px 0;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .08em;
+    color: var(--muted); text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,.18); padding-bottom: 2px;
+  }
+  .c-src a:hover { color: #fff; border-color: #fff; }
+
+  /* ---------- overlays ---------- */
+  .overlay {
+    position: fixed; inset: 0; z-index: 60; background: rgba(3,5,9,.92); backdrop-filter: blur(10px);
+    display: none; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 80px 20px 60px;
+  }
+  .overlay.open { display: flex; }
+  .sheet { max-width: 740px; position: relative; padding: 0 20px; }
+  .sheet .close { position: fixed; top: calc(18px + env(safe-area-inset-top, 0px)); right: 28px; }
+  .sheet h2 { font-family: var(--display); font-size: 26px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 6px; }
+  .sheet .mono-sub { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--muted); margin-bottom: 30px; text-transform: uppercase; }
+  .sheet h3 { font-family: var(--mono); font-size: 10px; letter-spacing: .26em; text-transform: uppercase; color: var(--accent); margin: 30px 0 10px; }
+  .sheet p, .sheet li { font-size: 14px; line-height: 1.75; color: #cfd8ec; }
+  .sheet ul { padding-left: 20px; }
+  .sheet b { color: var(--text); }
+
+  #fallback {
+    position: fixed; inset: 0; z-index: 5; display: none;
+    align-items: center; justify-content: center; text-align: center;
+    color: var(--muted); font-family: var(--mono); font-size: 12px; line-height: 2;
+  }
+
+  /* ---------- phone ---------- */
+  @media (max-width: 720px) {
+    header { padding: 12px 16px; gap: 8px; flex-wrap: wrap; }
+    .title-block h1 { font-size: 11px; letter-spacing: .18em; }
+    .title-block .sub { display: none; }
+    .btn { margin-left: 12px; font-size: 10px; letter-spacing: .14em; }
+    .crumb { top: 52px; left: 16px; right: 16px; font-size: 9px; }
+    .legend { left: 16px; right: 16px; bottom: 16px; gap: 10px; flex-wrap: wrap; font-size: 8px; }
+    .legend .lsep { display: none; }
+    .hint { display: none; }
+    .e-label .n { font-size: 13px; }
+    .e-label .d { display: none; }
+    .e-label .m { font-size: 7.5px; }
+    .c-inner { padding: 86px 20px 70px; }
+    .c-pos { font-size: 15px; }
+    .c-take { padding-left: 16px; }
+    .c-take .v { font-size: 16px; }
+    .sheet { padding: 0 4px; }
+    .sheet h2 { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="scene"></canvas>
+<div id="labels"></div>
+<div id="vignette"></div>
+<div id="fallback">3D scene requires an internet connection<br>(three.js loads from CDN)</div>
+
+<header>
+  <div class="title-block">
+    <h1>Better-for-You Indulgence</h1>
+    <div class="sub">A US + Australia market map of guilt-free food & beverage, by Arjun Kulshrestha · UPDATED SEPTEMBER 2026</div>
+  </div>
+  <div class="spacer"></div>
+  <button class="btn" id="btn-thesis">Thesis</button>
+  <button class="btn" id="btn-howto">How to read</button>
+  <button class="btn hidden" id="btn-back">&larr; Universe</button>
+</header>
+
+<div class="crumb" id="crumb">UNIVERSE / <b>6 ELEMENTS · 31 COMPANIES · US + AU</b></div>
+
+<div class="legend">
+  <span><i class="dot us"></i>US</span>
+  <span><i class="dot au"></i>AU</span>
+  <span><i class="dot na"></i>N.AM</span>
+  <span class="lsep"></span>
+  <span>RING = EXITED</span>
+  <span>PULSE = BREAKOUT</span>
+  <span>SIZE = SCALE</span>
+</div>
+
+<div class="hint" id="hint">Click an element star to fly in</div>
+
+<section id="company"><button class="btn close" onclick="closeDossier()">Close &nbsp;&times;</button><div class="c-inner" id="company-body"></div></section>
+
+<div class="overlay" id="ov-thesis">
+  <div class="sheet">
+    <button class="btn close" onclick="toggleOverlay('ov-thesis')">Close &nbsp;&times;</button>
+    <h2>The 1-Page Thesis</h2>
+    <div class="mono-sub">BETTER-FOR-YOU INDULGENCE · ARJUN KULSHRESTHA · SEPTEMBER 2026</div>
+    <h3>Why now</h3>
+    <p>Health stopped being a sacrifice aesthetic and became a status aesthetic. Protein, gut health and "no added sugar" are now how mainstream consumers shop the treat aisle, and GLP-1 adoption (~1 in 8 US adults) is compressing appetite while raising the bar for what a snack must justify. Indulgence occasions aren't disappearing; they're being re-priced and re-formulated.</p>
+    <h3>The proof it's venture-scale</h3>
+    <p>PepsiCo paid <b>$1.95B for Poppi</b> (2025). OLIPOP reached a <b>$1.85B valuation, profitably</b>. Hershey paid <b>~$750M for LesserEvil</b>; PepsiCo <b>$1.2B for Siete</b>. <b>David</b> hit ~$100M year-one revenue at a $725M valuation, then raised at <b>$2.25B</b> in September 2026. Strategics have stalled innovation engines and are paying 3–4x revenue for brands that own a need-state.</p>
+    <h3>Why startups win</h3>
+    <p>Incumbents can't make these products without indicting their core portfolio, and their brands carry zero permission in health. Startups win on founder taste, formulation speed, and audiences they bring with them (Feastables: $0&rarr;$250M in &lt;3 yrs on creator distribution).</p>
+    <h3>The Australia angle</h3>
+    <p>AU runs the US playbook with a 2–3 year lag, a chemist-channel beachhead US brands don't have (Chemist Warehouse), the world's most consolidated grocery duopoly (brutal, but national in one deal), and structural kids'-snack demand via school canteen policy. Remedy (~A$163M rev) and Noshu (A$4M&rarr;A$38M in 4 yrs) prove local scale; FUNDAY proves exportability; NOON went from national Woolworths (Jan 2026) to about 2,000 US Target stores (Aug 2026).</p>
+    <h3>What the best companies understand</h3>
+    <p>Taste parity is the entry ticket, not the win. The win is <b>repeat purchase</b> (habit formats beat novelty), <b>supply-chain ownership</b> (David bought its ingredient supplier; LesserEvil self-manufactures), and <b>distribution as moat</b>: a creator audience, a pharmacy chain, or a school canteen list.</p>
+    <h3>Where I'd be careful</h3>
+    <p>US healthy soda is post-peak for new entrants. Gummies are crowded. Claims risk is real (Poppi settled a prebiotic class action pre-exit). And the best operators (Chomps, ~$900M rev, near-bootstrapped) sometimes don't need venture money at all. Founder selection is the whole game.</p>
+  </div>
+</div>
+
+<div class="overlay" id="ov-howto">
+  <div class="sheet">
+    <button class="btn close" onclick="toggleOverlay('ov-howto')">Close &nbsp;&times;</button>
+    <h2>How to read this map</h2>
+    <div class="mono-sub">ORIENTATION BRIEF · 30 SECONDS</div>
+    <ul>
+      <li><b>The six element stars are consumer need-states</b>, not product aisles. Fire is the drive to earn a treat (protein); Water is the ritual of refreshment; Crystal is sweetness with the sugar removed; Terra is grounded comfort food; Flora is the living gut; Wind is culture and the lunchbox.</li>
+      <li><b>Click a star</b> and the camera flies into its system. <b>Planets are companies</b>: size = scale signal, a ring = acquired/exited (kept as pricing comps), a pulse = breakout in flight, the label dot = US / AU / North America.</li>
+      <li><b>Click a planet</b> for the investor page: positioning, differentiation, channels, funding signal, and my take.</li>
+      <li><b>31 companies, startup-weighted, ~50/50 US and Australia.</b> Facts are flagged verified / company-reported / estimate, with sources.</li>
+      <li>Press <b>Esc</b> to fly back out. Drag does nothing; this map flies itself.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+/* non-module globals shared with the module scene code */
+const DATA = {"meta": {"title": "Better-for-You Indulgence", "subtitle": "A US + Australia market map of guilt-free food & beverage, by Arjun Kulshrestha", "updated": "September 2026", "author": "Arjun Kulshrestha"}, "galaxies": [{"id": "protein", "name": "Protein as Pleasure", "tagline": "Dessert-coded protein. Candy bars that happen to have macros.", "need_state": "I want a treat that earns its place in my day.", "why_care": "Protein has replaced 'low fat' as the universal health heuristic. The winning brands code as candy, cereal and popcorn, not gym supplements, which unlocks mass grocery and convenience channels.", "maturity": "Scaling", "vc_attractiveness": "High", "risks": "Formulation arms race; novel-ingredient scrutiny (e.g. EPG); celebrity-brand noise; incumbents (Quest, Barebells) own shelf space.", "color": "#ff6b35", "x": 22, "y": 30}, {"id": "sugarfree", "name": "Sweet, Without the Sugar", "tagline": "Candy, chocolate and dessert with the regret removed.", "need_state": "I refuse to give up sweets. Take out the sugar, not the joy.", "why_care": "Sugar is the single most avoided ingredient in both the US and Australia. The unlock was taste parity plus fun branding: these brands sell in the candy aisle and at the chemist, not the diet aisle.", "maturity": "Scaling → Crowded (gummies)", "vc_attractiveness": "Medium-High", "risks": "Sweetener fatigue (sugar alcohols, stevia aftertaste); private label moves fast; single-hero-SKU concentration.", "color": "#e84393", "x": 68, "y": 22}, {"id": "drinks", "name": "Functional Refreshment", "tagline": "Soda rebuilt: prebiotics, no sugar, real flavour.", "need_state": "I want the ritual of a Coke without drinking a Coke.", "why_care": "The category that proved BFY indulgence is venture-scale: Poppi exited to PepsiCo for $1.95B and OLIPOP was last valued at $1.85B. Australia is running the same playbook 2–3 years behind the US.", "maturity": "Crowded (US) / Scaling (AU)", "vc_attractiveness": "Medium (US) / High (AU)", "risks": "US shelf is saturated post-Poppi; flavour/format copycats; big-soda response (Coke Simply Pop); prebiotic claims litigation.", "color": "#00b8d4", "x": 46, "y": 64}, {"id": "gut", "name": "Gut Health & Free-From", "tagline": "Indulgence engineered for sensitive stomachs and allergies.", "need_state": "I want to eat like everyone else without paying for it later.", "why_care": "Gut health is the fastest-growing wellness claim, and GLP-1 users need fibre and digestive support. Free-from brands win fierce loyalty because the alternative for these consumers is exclusion, not another brand.", "maturity": "Emerging", "vc_attractiveness": "High", "risks": "Niche-to-mass leap is hard; medical-adjacent claims invite regulator attention; low-FODMAP is a small beachhead.", "color": "#9c27b0", "x": 82, "y": 55}, {"id": "comfort", "name": "Clean-Label Comfort", "tagline": "Mac & cheese, ramen, tacos and snacks, with the label cleaned up.", "need_state": "I want childhood comfort food I don't have to hide in my pantry.", "why_care": "Nostalgia is the cheapest customer acquisition there is. Upgrading an existing habit (ramen, mac & cheese, popcorn) beats inventing a new one, and acquirers agree: Siete went for $1.2B, LesserEvil for ~$750M.", "maturity": "Scaling", "vc_attractiveness": "High", "risks": "Premium price vs. $1 incumbent comparison; velocity pressure in mainstream grocery; 'clean label' is unregulated language.", "color": "#ffc107", "x": 17, "y": 56}, {"id": "culture", "name": "Culture-Led & Kids' Treats", "tagline": "Audience-first brands and lunchbox-safe indulgence.", "need_state": "I buy the story (or my kids' lunchbox rules decide for me).", "why_care": "Distribution is the moat: creators bring their own. Feastables hit $250M revenue in under three years off MrBeast's audience. Meanwhile parents are an underserved, rule-driven buyer (school policies, sugar limits) with high repeat purchase.", "maturity": "Emerging", "vc_attractiveness": "Medium", "risks": "Key-person risk on creator brands; kids' marketing regulation; novelty purchase vs. true repeat.", "color": "#4caf50", "x": 70, "y": 82}], "companies": [{"name": "David", "geo": "US", "galaxy": "protein", "product": "28g-protein, 0g-sugar, 150-calorie bars, now also frozen dessert and ready-to-drink shakes", "positioning": "The most efficient protein per calorie, branded like a luxury object, not a supplement", "target": "Protein-first consumers and GLP-1 users who treat macros as a daily budget", "differentiation": "Vertical ingredient control: it used its Series A to buy Epogee, sole supplier of the EPG fat replacer behind its calorie math", "channels": "DTC-first, now 35,000+ retail locations including Walmart, Target and Costco", "vc_take": "Category-defining velocity: ~$100M revenue in year one, then a 3x step-up to $2.25B sixteen months after the Series A, and a supply-chain moat most CPG brands never build. The founder set (Peter Rahal, ex-RXBAR) is the operator archetype this thesis bets on.", "signal": "$250M Series B at a $2.25B valuation (Sep 2026) for parent Medici Brands, co-led by Greenoaks and Valor; follows the $75M Series A at $725M (May 2025); verified", "status": "breakout", "scale": 5, "sources": ["https://www.prnewswire.com/news-releases/medici-brands-raises-250-million-in-series-b-funding-302867137.html", "https://www.businesswire.com/news/home/20250529749264/en/David-Closes-$75-Million-Series-A-Funding-Round", "https://fortune.com/2025/10/13/david-protein-bars-rx-venture-food-startups-cod/"]}, {"name": "Chomps", "geo": "US", "galaxy": "protein", "product": "Grass-fed beef, venison and turkey meat sticks", "positioning": "Clean-ingredient protein snacking for everyone, not just hunters and gym-goers", "target": "Whole30 / paleo / protein-conscious mainstream shoppers, increasingly GLP-1 users", "differentiation": "Ingredient discipline plus near-bootstrapped capital efficiency; founders still control the company", "channels": "Started DTC/Amazon; now mass retail (Costco, Target, Walmart, c-stores)", "vc_take": "The bear case for venture in this category: ~$900M revenue built with almost no dilution. Proof the category creates real businesses, and a warning that the best operators may not need your cheque.", "signal": "Est. ~$900M 2025 revenue (Forbes estimate); $100M credit line with Wells Fargo (Apr 2025); estimate + verified facility", "status": "independent", "scale": 5, "sources": ["https://www.inc.com/christopher-yang/how-a-meat-stick-brand-built-on-6500-reached-500-million/91281289", "https://www.globenewswire.com/news-release/2025/04/24/3067482/0/en/Chomps-Secures-100-Million-Revolving-Line-of-Credit-with-Wells-Fargo.html"]}, {"name": "Magic Spoon", "geo": "US", "galaxy": "protein", "product": "High-protein, zero-sugar 'childhood' cereal and treats", "positioning": "Saturday-morning nostalgia for adults with macros", "target": "Millennials who quit cereal for health reasons but miss it", "differentiation": "First to make protein taste like Froot Loops; strong podcast/creator DTC engine before retail", "channels": "DTC-led launch, now Target, Walmart, Costco, Amazon", "vc_take": "Textbook DTC-to-retail transition and proof that 'remake a nostalgic aisle' works, but also a case study in how CAC-heavy DTC growth must convert to retail velocity to justify ~$209M raised.", "signal": "~$209M total funding across 5 rounds (Tracxn); $85M round in 2022 alongside Target launch; verified", "status": "independent", "scale": 4, "sources": ["https://tracxn.com/d/companies/magic-spoon/__1enHSEZ23o_smWdM-7M8hNC-v63fHmYYTubxCLk_viA", "https://www.fooddive.com/news/magic-spoon-raises-85m-better-for-you-cereal-retail/625417/"]}, {"name": "Khloud", "geo": "US", "galaxy": "protein", "product": "Protein popcorn (7g protein per serve)", "positioning": "Celebrity-founded everyday protein snacking", "target": "Mass Target shoppers; Kardashian audience crossover", "differentiation": "Day-one national distribution via celebrity leverage; popcorn as an unclaimed protein format", "channels": "Target nationwide at launch, expanding mass retail", "vc_take": "A live experiment in whether celebrity distribution can substitute for brand-building. Watch repeat purchase, not launch velocity. That's the entire question with talent-led CPG.", "signal": "$12M oversubscribed round (Apr 2025): Serena Ventures, WME, Shrug, K5; verified", "status": "independent", "scale": 2, "sources": ["https://techcrunch.com/2025/04/22/khloe-kardashian-launches-consumer-brand-backed-by-serena-ventures-wme/", "https://athletechnews.com/khloe-kardashians-khloud-lands-15m-in-funding-for-high-protein-popcorn/"]}, {"name": "Macro Mike", "geo": "AU", "galaxy": "protein", "product": "Plant-based protein powders, baking mixes and peanut-butter treats", "positioning": "Dessert-flavoured plant protein with a gut-health angle", "target": "Australian wellness consumers; dairy-avoiders who still want brownies", "differentiation": "Built a dessert-first plant protein brand from Burleigh Heads with zero external capital", "channels": "DTC-led, plus AU health retail and export", "vc_take": "The AU capital-efficiency archetype: 35+ staff, self-funded since 2016. Interesting both as a scaled bootstrapper and as a signal that AU BFY brands historically grew without venture. That's changing.", "signal": "Self-funded; 35+ staff (Business News Australia); company-reported", "status": "independent", "scale": 3, "sources": ["https://www.businessnewsaustralia.com/articles/macro-mike-growth-pushed-by-passion-and-peanuts.html"]}, {"name": "Vitawerx", "geo": "AU", "galaxy": "protein", "product": "Protein-coated chocolate, wafers and choc-coated nuts", "positioning": "'Healthy never tasted so good', chocolate-first, protein hidden inside", "target": "AU gym-adjacent consumers and health-store shoppers trading up from candy bars", "differentiation": "Owns the protein-chocolate niche in AU health retail; broad SKU range across formats", "channels": "AU health food stores, supplement retail, pharmacy, export to NZ", "vc_take": "Australia's answer to the 'candy-coded protein' trend, pre-institutional-capital. Exactly the profile a US growth fund hunting a 'David of Australia' narrative would screen.", "signal": "Founded 2015; nationally distributed in AU health retail; no disclosed external funding; company-reported", "status": "independent", "scale": 2, "sources": ["https://vitawerx.com/pages/about-us"]}, {"name": "Chief Nutrition", "geo": "AU", "galaxy": "protein", "product": "Grass-fed collagen protein bars, biltong and collagen powders", "positioning": "Real-food protein for health-span, co-founded by a nutritionist and trainers", "target": "Paleo/whole-food Australians; CrossFit and longevity communities", "differentiation": "Whole-food ingredient list in a category full of isolates and syrups; founder credibility in fitness media", "channels": "DTC, Woolworths/health retail, gyms; raised via Equitise equity crowdfunding", "vc_take": "Community-funded with a profitable ~A$4M run-rate. Small, but the crowdfunding cap table is itself a brand-love signal. A seed-stage bet on the 'meat-snack-meets-collagen' wedge in AU.", "signal": "~A$4M annual revenue run-rate, profitable, revenue doubled YoY (Equitise raise materials); company-reported", "status": "independent", "scale": 1, "sources": ["https://www.equitise.com/offer/chief2023-offer/"]}, {"name": "NOON", "geo": "AU", "galaxy": "protein", "product": "Ready-to-drink liquid breakfast in a can made with real milk and whole oats: 20g protein, 5g fibre, 0g added sugar (US formula; the AU launch formula is 18g protein, 6g fibre)", "positioning": "Breakfast, not a protein shake: a whole-family breakfast occasion in a can, sold on protein, fibre and fullness rather than weight loss", "target": "Busy families and commuters who skip breakfast or default to coffee and a bar", "differentiation": "Owns an occasion instead of a macro. The founders call liquid breakfast the wedge into the wider breakfast category and deliberately stay out of the meal-replacement and GLP-1 framing", "channels": "Woolworths nationally in Australia (Jan 2026), then about 2,000 Target stores plus Target.com in the US (Aug 2026); natural grocery, more mass retail and convenience planned for 2027", "vc_take": "The sharpest channel sequencing on the map: prove the product in one concentrated AU grocery partner, then take that story into a single US mass retailer rather than spreading thin. Breakfast is a daily habit, which is the repeat-purchase profile this thesis rewards. What I'd want to see: units per store per week at Target, and how fast the next channel (natural or convenience) opens once that number is known.", "signal": "$2.5M pre-seed led by BFG Partners with RiverPark and Habitat Partners (2026); national Woolworths and ~2,000-store Target launches; verified", "status": "independent", "scale": 2, "sources": ["https://www.foodbusinessnews.net/articles/31005-noon-reimagining-the-breakfast-occasion", "https://www.nosh.com/pr/2026/08/04/noon-launches-nationwide-at-target-introducing-americas-first-breakfast-in-a-can", "https://insidefmcg.com.au/2026/01/12/noon-makes-national-debut-in-woolworths-with-on-the-go-breakfast-drinks/"]}, {"name": "FUNDAY Natural Sweets", "geo": "AU", "galaxy": "sugarfree", "product": "No-added-sugar, prebiotic-fibre gummies and chocolate", "positioning": "Proper lollies, zero guilt, fun-first branding, not diet branding", "target": "AU snackers and ex-candy-lovers; expanding to US", "differentiation": "No sugar alcohols (the SmartSweets gut-complaint weakness) and 7g prebiotic fibre per serve; chemist-channel beachhead", "channels": "Chemist Warehouse nationwide, Coles/Woolworths, Amazon AU, now US entry (fundaysweets.us)", "vc_take": "The single most exportable AU brand on this map. Ran the SmartSweets playbook with a better formulation and a pharmacy channel insight. Its US expansion is the trade I'd want to underwrite.", "signal": "Bootstrapped at launch (founder stated no external funding plans, 2022); national Chemist Warehouse + grocery distribution; US site live; verified distribution, funding status company-reported", "status": "independent", "scale": 2, "sources": ["https://www.foodnavigator-asia.com/Article/2022/01/05/Better-for-you-candy-Australia-s-Funday-outlines-domestic-and-international-expansion-strategy/", "https://www.fundaysweets.us/"]}, {"name": "SmartSweets", "geo": "NA", "galaxy": "sugarfree", "product": "Low-sugar gummies and candy", "positioning": "'Kick sugar, keep candy'", "target": "Mainstream North American candy buyers cutting sugar", "differentiation": "First mover at scale in low-sugar candy; founder-story-led brand (Tara Bosch, started at 21)", "channels": "Mass retail across North America", "vc_take": "The category's first big exit comp: TPG took majority control at $360M in 2020, four years from founding. Defines both the upside and the ceiling question: was that a venture outcome or a great PE outcome?", "signal": "Majority stake sold to TPG Growth at $360M (Oct 2020); verified", "status": "exited", "scale": 4, "sources": ["https://www.nosh.com/news/2020/smart-money-smartsweets-sells-to-tpg-brings-on-new-ceo/"]}, {"name": "Noshu", "geo": "AU", "galaxy": "sugarfree", "product": "Sugar-free donuts, baking mixes, frostings and chocolate ('Snackles')", "positioning": "Real dessert experiences, donuts, not 'diet bars', with 97–99% less sugar", "target": "AU supermarket shoppers, diabetics, low-carb households", "differentiation": "Proprietary sweetener systems built over a decade; owns the sugar-free bakery shelf in Coles/Woolworths", "target_note": "", "channels": "Coles, Woolworths, export plans (UK, EU, China)", "vc_take": "A$4M to A$38M in four years inside mainstream grocery, now raising its first external round for international expansion, a rare AU growth-equity entry point with proven velocity data.", "signal": "~A$38M expected sales; first external raise underway; projecting 2.5x in 3 years (SmartCompany / company); company-reported", "status": "independent", "scale": 3, "sources": ["https://www.smartcompany.com.au/entrepreneurs/australian-brand-noshu-grew-4-million-revenue-to-40-million-in-four-years/"]}, {"name": "Mid-Day Squares", "geo": "NA", "galaxy": "sugarfree", "product": "Functional chocolate squares (protein + fibre, low sugar)", "positioning": "'Chocolate that works as hard as you', built in public on social", "target": "Millennial/Gen Z snackers who follow the founders' content", "differentiation": "The founders ARE the media channel: daily behind-the-scenes content turned a chocolate bar into a show", "channels": "Whole Foods + natural channel US/Canada, DTC", "vc_take": "Best-in-class example of founder-as-distribution: organic content replacing paid CAC. The question is whether content-led love converts to mainstream velocity beyond the natural channel.", "signal": "~$16.5M raised over 3 rounds (Tracxn/Crunchbase); verified", "status": "independent", "scale": 2, "sources": ["https://www.crunchbase.com/organization/mid-day-squares", "https://tracxn.com/d/companies/mid-day-squares/__3S6aXZP2tLgypq6g1A0SvwJuzm-BdOCkrO0DAu-8hWg"]}, {"name": "Denada", "geo": "AU", "galaxy": "sugarfree", "product": "Sugar-free ice cream", "positioning": "Indulgent ice cream, zero sugar, no asterisks on taste", "target": "AU households cutting sugar; diabetic and keto consumers", "differentiation": "First-mover in AU sugar-free ice cream; built distribution to 1,250+ stores in three years with no outside capital", "channels": "AU supermarkets and independents; first export markets", "vc_take": "Frozen is the hardest BFY logistics problem (cold chain, slotting), and Denada cracked AU shelf bootstrapped. A capital injection here is a distribution-expansion bet, not a product bet.", "signal": "1,250+ AU stores within 3 years, no outside investment at launch; now exporting; company-reported", "status": "independent", "scale": 2, "sources": ["https://www.foodanddrinkbusiness.com.au/news/denada-lands-its-first-export-market"]}, {"name": "OLIPOP", "geo": "US", "galaxy": "drinks", "product": "Prebiotic soda with classic flavours (Vintage Cola, Root Beer)", "positioning": "A new kind of soda: nostalgia + digestive health, science-forward", "target": "Mass grocery shoppers replacing legacy soda", "differentiation": "Deepest formulation credibility in the set (microbiome research roots); profitable at scale", "channels": "Mass retail nationwide, DTC", "vc_take": "The standing proof that BFY beverage is venture-scale and can be PROFITABLE: $400M+ sales, first profit in 2024, $1.85B valuation. The remaining question is exit path now that Pepsi bought its rival.", "signal": "$50M raise at $1.85B valuation (Feb 2025); $400M+ 2024 sales; profitable; verified", "status": "breakout", "scale": 5, "sources": ["https://www.cnbc.com/2025/03/17/pepsico-buys-prebiotic-soda-brand-poppi-for-more-than-1point6-billion.html", "https://www.marketingdive.com/news/pepsico-buys-poppi-2B-pepsi-purchase-prebiotic-healthy-soda-better-for-you-drink-olipop-simply-pop/742679/"]}, {"name": "Poppi", "geo": "US", "galaxy": "drinks", "product": "Prebiotic soda (apple-cider-vinegar origin story)", "positioning": "Soda's fun, social, brand-led comeback: Super Bowl ads and merch", "target": "Gen Z and millennial ex-soda drinkers", "differentiation": "Marketing velocity: TikTok-native brand building that outran a better-funded rival on cultural relevance", "channels": "Mass retail, Amazon, DTC", "vc_take": "The exit that validated the whole map: PepsiCo paid $1.95B in 2025 off ~$500M 2024 sales. Also a cautionary tale: prebiotic claims drew a class-action settlement before the deal closed.", "signal": "Acquired by PepsiCo for $1.95B (Mar 2025); ~$500M 2024 sales; verified", "status": "exited", "scale": 5, "sources": ["https://www.pepsico.com/our-stories/press-release/pepsico-to-acquire-poppi03172025", "https://www.cnn.com/2025/03/17/business/pepsi-buys-poppi/"]}, {"name": "Remedy Drinks", "geo": "AU", "galaxy": "drinks", "product": "Live-cultured kombucha, prebiotic Sodaly, ACV switchel, shots", "positioning": "Fermentation-led, no-sugar functional drinks from a Melbourne kitchen to 25,000 outlets", "target": "Mainstream AU shoppers; expanding US/EU/Asia", "differentiation": "Real fermentation at industrial scale; AU's #1 kombucha with L Catterton backing", "channels": "25,000+ outlets in AU plus export; unified global entity from April 2025", "vc_take": "Australia's functional-beverage anchor asset (~A$163M revenue). Its global consolidation move reads as exit grooming: the comp every AU beverage seed deal will be priced against.", "signal": "~A$162.7M FY2025 revenue (IBISWorld); Series B from L Catterton & Kin Group (2023); verified", "status": "breakout", "scale": 4, "sources": ["https://www.ibisworld.com/australia/company/remedy-drinks-pty-ltd/461825/", "https://www.prnewswire.com/news-releases/remedy-drinks-closes-series-b-funding-round-and-appoints-new-c-suite-sales-leader-to-accelerate-global-growth-301750480.html"]}, {"name": "Naked Life", "geo": "AU", "galaxy": "drinks", "product": "100% natural sugar-free sodas and non-alcoholic cocktails/spirits", "positioning": "Premium sugar-free refreshment without artificial sweeteners", "target": "AU mainstream grocery + the sober-curious overlap", "differentiation": "Straddles two need-states (no sugar + no alcohol) with one brand; national grocery from a 2016 kitchen start", "channels": "Woolworths, Coles, IGA, Dan Murphy's", "vc_take": "Quiet national distribution across both grocery AND liquor channels is a structural advantage no US healthy-soda brand has. An obvious platform for a US prebiotic-style line extension.", "signal": "Stocked nationally in Woolworths, Coles, IGA, Dan Murphy's; founded 2016; company-reported", "status": "independent", "scale": 3, "sources": ["https://www.nakedlife.com.au/pages/faq", "https://www.danmurphys.com.au/product/DM_ER_2000004178_NL-COL/naked-life-naturally-sugar-free-soda-12x330ml-natural-cola-"]}, {"name": "Nexba", "geo": "AU", "galaxy": "drinks", "product": "Sugar-free, naturally sweetened sodas, kombucha and gut-health drinks", "positioning": "'Naturally sugar free' mass-market challenger", "target": "Price-conscious AU grocery shoppers wanting healthier soft drinks", "differentiation": "Early AU mover (Product of the Year 2017) with own natural sweetener systems", "channels": "AU grocery (Coles partnership history), pharmacy, export attempts (UK Sainsbury's)", "vc_take": "A lesson asset as much as an opportunity: early lead, broad portfolio, but squeezed between Remedy's fermentation credibility and private label. Shows brand focus beats SKU sprawl in beverage.", "signal": "Founded 2010; national distribution; Product of the Year 2017; company-reported", "status": "independent", "scale": 2, "sources": ["https://nexba.com/"]}, {"name": "Bobby", "geo": "AU", "galaxy": "drinks", "product": "Better-for-you cola and soft drinks (sugar-free, prebiotic)", "positioning": "An irreverent Aussie 'new Coke' for the post-sugar generation", "target": "Gen Z / young millennial AU convenience and grocery buyers", "differentiation": "Brand-as-personality in a functional category; running the Poppi cultural playbook in AU", "channels": "AU convenience, independents, grocery rollout", "vc_take": "If the US arc (Poppi/OLIPOP) predicts AU with a 2–3 year lag, the AU window for a breakout healthy soda brand is open right now, and Bobby is the most culture-forward contender in it.", "signal": "Early-stage; expanding AU distribution; company-reported, unverified scale", "status": "independent", "scale": 1, "sources": ["https://nexba.com/"]}, {"name": "StrangeLove", "geo": "AU", "galaxy": "drinks", "product": "Premium craft sodas, tonics and lo-cal mixers", "positioning": "Design-led, adult, lower-sugar refreshment, taste-first credibility", "target": "Premium AU hospitality and grocery; cocktail/non-alc crossover", "differentiation": "Wins on taste and design rather than functional claims, with a hospitality channel beachhead big brands can't fake", "channels": "On-premise (bars/restaurants), premium grocery, DTC", "vc_take": "The 'taste-maximalist' end of the barbell: no health claims to defend, premium price realisation, and a hospitality moat. Smaller outcome probability-weighted, but durable brand equity.", "signal": "Established premium distribution in AU hospitality and grocery; company-reported, unverified scale", "status": "independent", "scale": 2, "sources": ["https://strangelove.com.au/"]}, {"name": "BelliWelli", "geo": "US", "galaxy": "gut", "product": "Gut-friendly, low-FODMAP snack bars and gut-health products", "positioning": "'Hot girls have IBS', destigmatising digestive health with humour", "target": "Women with IBS/digestive issues (≈1 in 5 adults), Gen Z wellness", "differentiation": "Community-first growth: viral billboards and TikTok built the brand before retail did", "channels": "DTC, Amazon, expanding US retail (Target, Sprouts)", "vc_take": "The cleanest example of an underserved-condition wedge becoming a lifestyle brand. $10M Series B off viral organic growth: the CAC profile every DTC food brand claims and few have.", "signal": "$10M Series B (Oct 2024); ~$26M total raised; verified", "status": "independent", "scale": 2, "sources": ["https://www.nosh.com/news/2023/going-with-their-gut-belliwelli-raises-15-4m/", "https://www.crunchbase.com/organization/belliwelli"]}, {"name": "Fodbods", "geo": "AU", "galaxy": "gut", "product": "Low-FODMAP, gut-friendly snack bars and protein bars", "positioning": "Science-certified safe snacking for sensitive stomachs (Monash FODMAP heritage country)", "target": "Australians with IBS and food intolerances", "differentiation": "Australia invented the low-FODMAP framework (Monash University), a local credibility moat; angel-backed by Scale Investors", "channels": "DTC, AU pharmacy and health retail, Coles", "vc_take": "BelliWelli's thesis with an unfair Australian advantage: Monash is the global FODMAP authority. A small cheque with a clear US-expansion narrative riding clinical credibility.", "signal": "Seed funding from Scale Investors (AU angel network); verified investor, undisclosed amount", "status": "independent", "scale": 1, "sources": ["https://scaleinvestors.com.au/fodbods", "https://www.crunchbase.com/organization/fodbods"]}, {"name": "Sweet Loren's", "geo": "US", "galaxy": "gut", "product": "Allergen-free, gluten-free refrigerated cookie dough and pastry", "positioning": "'Everyone deserves a delicious cookie', top-14-allergen-free indulgence", "target": "Allergy households (an entire family switches when one member must), celiac consumers", "differentiation": "Owns the refrigerated dough niche incumbents ignored; founder survivor story drives authentic brand trust", "channels": "30,000+ US grocery doors incl. mainstream chains (company-reported)", "vc_take": "Allergen-free is bought by the household, not the individual: basket-level loyalty with near-zero churn. Quietly one of the best repeat-purchase profiles in the whole map.", "signal": "National US grocery distribution; largely founder-controlled; company-reported", "status": "independent", "scale": 3, "sources": ["https://sweetlorens.com/"]}, {"name": "Goodles", "geo": "US", "galaxy": "comfort", "product": "Protein- and veggie-boosted boxed mac & cheese and noodles", "positioning": "'Noodles, gooder', upgrading the most nostalgic box in the pantry", "target": "Millennial parents and comfort-food eaters who read labels", "differentiation": "14g protein + hidden veg in a true Kraft-blue-box taste experience; celebrity co-founder (Gal Gadot) used sparingly", "channels": "Target, Walmart, Whole Foods, Amazon", "vc_take": "L Catterton-backed shot at a $9B sleepy aisle. Mac & cheese has guaranteed household penetration; the bet is purely on conversion and velocity, not behaviour change. That's the right kind of CPG bet.", "signal": "$19.4M raised ($13M Series A, Sep 2023, L Catterton); verified", "status": "independent", "scale": 2, "sources": ["https://tracxn.com/d/companies/goodles/__1irEr3Q7VA2NPaj9U6czeVl395pPojGxYiP6B6nyvjE", "https://kofirm.com/ko-client-goodles-raises-13m-series-a-funding-round"]}, {"name": "immi", "geo": "US", "galaxy": "comfort", "product": "High-protein, low-carb instant ramen", "positioning": "The ramen you loved at uni, re-engineered for adult macros", "target": "Asian-American and mainstream millennial comfort-food eaters; keto/low-carb", "differentiation": "First credible BFY entry in a 100B-serving global category; founders are ex-tech operators (Kevin Lee, Kevin Chanthasiriphan) with cultural authenticity", "channels": "DTC-first, Amazon, Whole Foods, Target", "vc_take": "Ramen is one of the most habitual, highest-frequency foods on earth with zero healthy incumbent. If immi nails taste parity, the repeat-purchase math beats almost any snack on this map.", "signal": "~$29M raised over 4 rounds; latest round Dec 2024 (Tracxn); verified", "status": "independent", "scale": 2, "sources": ["https://tracxn.com/d/companies/immi/__EMasZuzHw4mQqrxj1OSCqt7ZzKyJVzVv-dCapsRuRko"]}, {"name": "Mingle", "geo": "AU", "galaxy": "comfort", "product": "Natural, low-sugar seasonings, sauces and gravies", "positioning": "'No nasties' flavour staples: clean-label everyday cooking, not dieting", "target": "AU home cooks and parents replacing legacy sauce brands", "differentiation": "Took on AU's most concentrated grocery duopoly shelf (sauces/seasonings) and won national ranging in both majors", "channels": "Woolworths and Coles nationally, DTC", "vc_take": "Pantry staples are the stickiest repeat purchase in food. Mingle proved an indie can displace incumbent sauce brands in the world's most consolidated grocery market: rare velocity evidence.", "signal": "National Woolworths + Coles ranging; early accelerator funding only (PitchBook/Crunchbase); verified distribution", "status": "independent", "scale": 2, "sources": ["https://www.mingleseasoning.com/", "https://australia.incorp.asia/cooking-up-growth-mingle-seasonings-recipe-for-financial-success/"]}, {"name": "Siete Foods", "geo": "US", "galaxy": "comfort", "product": "Grain-free tortillas, chips, salsas and Mexican-American heritage foods", "positioning": "Family-story-led, grain-free comfort food ('Juntos es Mejor')", "target": "Health-conscious households + Mexican-American heritage consumers", "differentiation": "Authentic family founding story (7 Garza family members) + allergen-conscious formulation in a giant everyday category", "channels": "National US grocery and mass", "vc_take": "The exit comp for clean-label comfort: PepsiCo paid $1.2B in 2024. Proof that heritage + health + family story is an acquirable combination at scale.", "signal": "Acquired by PepsiCo for $1.2B (announced 2024); verified", "status": "exited", "scale": 5, "sources": ["https://www.fooddive.com/news/hershey-to-buy-heathier-snacks-maker-lesserevil/744388/", "https://www.prnewswire.com/news-releases/the-hershey-company-announces-intent-to-acquire-lesserevil-302420053.html"]}, {"name": "LesserEvil", "geo": "US", "galaxy": "comfort", "product": "Organic popcorn, puffs and 'Space Balls' snacks (coconut-oil popped)", "positioning": "Mindful, organic snacking with playful cosmic branding", "target": "Natural-channel families trading up from conventional salty snacks", "differentiation": "Owns its manufacturing (rare for indie CPG), a margin and innovation-speed advantage that made it acquirable", "channels": "National US natural + mass retail", "vc_take": "The 2025 exit that priced clean-label salty snacks: Hershey paid ~$750M (WSJ). Note WHY it won: self-manufacturing. Supply-chain ownership is the recurring moat across this map's biggest outcomes.", "signal": "Acquired by Hershey, ~$750M reported (closed Nov 2025); verified deal, price per WSJ report", "status": "exited", "scale": 4, "sources": ["https://www.fooddive.com/news/hershey-closes-lesserevil-acquisition-as-it-looks-to-lead-the-future-of-sn/805814/", "https://www.prnewswire.com/news-releases/hershey-completes-acquisition-of-lesserevil-expanding-consumer-choice-302619516.html"]}, {"name": "Feastables", "geo": "US", "galaxy": "culture", "product": "Chocolate bars with simplified ingredient lists", "positioning": "MrBeast's chocolate: creator audience converted to shelf velocity", "target": "Gen Z / Gen Alpha; gifting and impulse purchase", "differentiation": "200M+ subscriber distribution engine; 'cleaner than Hershey's' ingredient framing without health-brand pricing", "channels": "Walmart-led mass retail (deliberately not DTC)", "vc_take": "$0 to $250M revenue in under 3 years, profitably, by skipping DTC entirely and putting creator media behind Walmart shelf. The most important distribution lesson on this map, and also the most key-person-dependent asset on it.", "signal": "~$250M 2024 revenue, ~$20M profit; ~$520M projected 2025 (reported); credible third-party reporting, not audited", "status": "independent", "scale": 4, "sources": ["https://femfounded.org/case-studies/feastables/", "https://arthnova.com/mrbeast-feastables-walmart-youtube-physical-shelves/"]}, {"name": "Twisted Healthy Treats", "geo": "AU", "galaxy": "culture", "product": "Lower-sugar, hidden-veg kids' frozen treats and ice creams", "positioning": "Treats parents say yes to: kid-tested taste, school-canteen compliant", "target": "AU parents; school canteens (traffic-light food policies)", "differentiation": "Canteen-compliance as a regulatory moat: AU school food policies effectively mandate products like this", "channels": "AU grocery, school canteens, food service", "vc_take": "Kids' BFY is bought on rules, not willpower: school policy is a built-in B2B2C channel US brands don't have. Small today, but the structural demand is legislated.", "signal": "AU grocery + canteen distribution; company-reported, unverified scale", "status": "independent", "scale": 1, "sources": ["https://twistedhealthytreats.com.au/"]}, {"name": "Blue Dinosaur", "geo": "AU", "galaxy": "culture", "product": "Paleo-style real-food bars and kids' lunchbox snacks", "positioning": "Sunshine-coast real-food energy: minimal ingredients, lunchbox-safe lines", "target": "Active AU families; surf/outdoor lifestyle consumers", "differentiation": "Lifestyle-brand identity (surf culture) in a category of clinical macro brands; school-safe SKUs", "channels": "Woolworths, Coles, AU convenience, export", "vc_take": "Demonstrates the AU pattern: lifestyle authenticity over functional claims. A consolidation candidate: the AU bar shelf has too many subscale brands and someone will roll it up.", "signal": "National AU grocery distribution; company-reported, unverified scale", "status": "independent", "scale": 1, "sources": ["https://bluedinosaur.com.au/"]}]};
+const ELEMENTS = {
+  protein:   { label: "Fire",    kicker: "ELEMENT 01" },
+  sugarfree: { label: "Crystal", kicker: "ELEMENT 02" },
+  drinks:    { label: "Water",   kicker: "ELEMENT 03" },
+  gut:       { label: "Flora",   kicker: "ELEMENT 04" },
+  comfort:   { label: "Terra",   kicker: "ELEMENT 05" },
+  culture:   { label: "Wind",    kicker: "ELEMENT 06" }
+};
+const geoColor = { US: '#6ea8ff', AU: '#ffc861', NA: '#58d6c9' };
+const geoLabel = { US: 'USA', AU: 'AUS', NA: 'N.AM' };
+const esc = s => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;');
+
+const company = document.getElementById('company');
+function openDossier(c, g) {
+  const statusTxt = { exited: 'ACQUIRED', breakout: 'BREAKOUT', independent: 'INDEPENDENT' }[c.status];
+  const host = u => { try { return new URL(u).hostname.replace('www.', ''); } catch { return u; } };
+  document.getElementById('company-body').innerHTML = `
+    <div class="c-kicker"><span style="color:${g.color}">${ELEMENTS[g.id].label.toUpperCase()} / ${esc(g.name).toUpperCase()}</span>
+      &nbsp;·&nbsp; ${geoLabel[c.geo]} &nbsp;·&nbsp; ${statusTxt}</div>
+    <div class="c-name">${esc(c.name)}</div>
+    <div class="c-pos">${esc(c.positioning)}.</div>
+    <div class="c-rule" style="background:linear-gradient(90deg, ${g.color}, rgba(255,255,255,.05))"></div>
+    <div class="c-grid">
+      <div class="c-field"><div class="k">Core Product</div><div class="v">${esc(c.product)}</div></div>
+      <div class="c-field"><div class="k">Target Consumer</div><div class="v">${esc(c.target)}</div></div>
+      <div class="c-field"><div class="k">Differentiation</div><div class="v">${esc(c.differentiation)}</div></div>
+      <div class="c-field"><div class="k">Distribution</div><div class="v">${esc(c.channels)}</div></div>
+    </div>
+    <div class="c-field c-signal"><div class="k">Funding / Scale Signal</div><div class="v">${esc(c.signal)}</div></div>
+    <div class="c-take"><div class="k" style="color:${g.color}">Why It Matters</div><div class="v">${esc(c.vc_take)}</div></div>
+    <div class="c-field c-src"><div class="k">Sources</div>
+      ${c.sources.map((s, i) => `<a href="${s}" target="_blank" rel="noopener">[${String(i+1).padStart(2,'0')}] ${esc(host(s))}</a>`).join('')}
+    </div>`;
+  company.classList.add('open');
+  company.scrollTop = 0;
+}
+function closeDossier() { company.classList.remove('open'); }
+function toggleOverlay(id) { document.getElementById(id).classList.toggle('open'); }
+document.getElementById('btn-thesis').onclick = () => toggleOverlay('ov-thesis');
+document.getElementById('btn-howto').onclick = () => toggleOverlay('ov-howto');
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+/* ================= renderer / scene ================= */
+const canvas = document.getElementById('scene');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x030509);
+scene.fog = new THREE.FogExp2(0x030509, 0.0028);
+
+const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.1, 3000);
+
+const labelRenderer = new CSS2DRenderer({ element: document.getElementById('labels') });
+labelRenderer.setSize(innerWidth, innerHeight);
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.9, 0.65, 0.18);
+composer.addPass(bloom);
+
+scene.add(new THREE.AmbientLight(0x445577, 0.55));
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+  composer.setSize(innerWidth, innerHeight);
+  labelRenderer.setSize(innerWidth, innerHeight);
+});
+
+/* ================= textures ================= */
+function glowTexture(hex) {
+  const c = document.createElement('canvas');
+  c.width = c.height = 128;
+  const x = c.getContext('2d');
+  const g = x.createRadialGradient(64, 64, 0, 64, 64, 64);
+  g.addColorStop(0, hex + 'ff');
+  g.addColorStop(0.25, hex + '66');
+  g.addColorStop(1, hex + '00');
+  x.fillStyle = g; x.fillRect(0, 0, 128, 128);
+  return new THREE.CanvasTexture(c);
+}
+
+function planetTexture(baseHex, seed) {
+  const c = document.createElement('canvas');
+  c.width = 256; c.height = 128;
+  const x = c.getContext('2d');
+  const base = new THREE.Color(baseHex);
+  let s = seed;
+  const rand = () => { s = (s * 16807) % 2147483647; return s / 2147483647; };
+  // latitudinal bands, hue-shifted around the element colour
+  for (let y = 0; y < 128; y += 2) {
+    const f = 0.55 + 0.45 * Math.sin(y * 0.12 + seed) * rand();
+    const col = base.clone().multiplyScalar(0.45 + f * 0.65);
+    x.fillStyle = '#' + col.getHexString();
+    x.fillRect(0, y, 256, 2);
+  }
+  // speckle
+  for (let i = 0; i < 700; i++) {
+    const a = 0.04 + rand() * 0.10;
+    x.fillStyle = rand() > 0.5 ? `rgba(255,255,255,${a})` : `rgba(0,0,10,${a})`;
+    x.fillRect(rand() * 256, rand() * 128, 1 + rand() * 2, 1 + rand() * 2);
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+
+/* ================= starfield ================= */
+const roundStarTex = (() => {
+  const c = document.createElement('canvas');
+  c.width = c.height = 32;
+  const x = c.getContext('2d');
+  const g = x.createRadialGradient(16, 16, 0, 16, 16, 16);
+  g.addColorStop(0, 'rgba(255,255,255,1)');
+  g.addColorStop(0.4, 'rgba(255,255,255,.6)');
+  g.addColorStop(1, 'rgba(255,255,255,0)');
+  x.fillStyle = g; x.fillRect(0, 0, 32, 32);
+  return new THREE.CanvasTexture(c);
+})();
+
+function starField(count, spreadMin, spreadMax, size, opacity, tint) {
+  const pos = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
+    const r = spreadMin + Math.random() * (spreadMax - spreadMin);
+    const th = Math.random() * Math.PI * 2;
+    const ph = Math.acos(Math.random() * 2 - 1);
+    pos[i*3]     = r * Math.sin(ph) * Math.cos(th);
+    pos[i*3 + 1] = r * Math.cos(ph) * 0.6;
+    pos[i*3 + 2] = r * Math.sin(ph) * Math.sin(th);
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const mat = new THREE.PointsMaterial({
+    color: tint, size, sizeAttenuation: true, map: roundStarTex,
+    transparent: true, opacity, depthWrite: false, blending: THREE.AdditiveBlending
+  });
+  return new THREE.Points(geo, mat);
+}
+scene.add(starField(5200, 150, 900, 1.5, 0.85, 0xcfe0ff));
+scene.add(starField(1400, 120, 700, 2.6, 0.6, 0xfff0d8));
+scene.add(starField(2400, 300, 1400, 1.1, 0.5, 0x9fb6ff));
+
+// faint distant nebula sprites, restrained, not wallpaper
+const nebTints = ['#2a2a55', '#1d2b50', '#33224d'];
+for (let i = 0; i < 5; i++) {
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: glowTexture(nebTints[i % 3]), transparent: true, opacity: 0.16,
+    depthWrite: false, blending: THREE.AdditiveBlending
+  }));
+  const th = i / 5 * Math.PI * 2;
+  sp.position.set(Math.cos(th) * 420, (Math.random() - 0.5) * 160, Math.sin(th) * 420);
+  sp.scale.setScalar(500 + Math.random() * 350);
+  scene.add(sp);
+}
+
+/* ================= element stars ================= */
+const RING = 46;
+const universe = new THREE.Group();
+scene.add(universe);
+const stars = [];   // {g, mesh, group, light, label, halo}
+
+DATA.galaxies.forEach((g, i) => {
+  const ang = i / DATA.galaxies.length * Math.PI * 2;
+  const pos = new THREE.Vector3(
+    Math.cos(ang) * RING,
+    Math.sin(ang * 2) * 4,
+    Math.sin(ang) * RING
+  );
+  const group = new THREE.Group();
+  group.position.copy(pos);
+
+  const isCrystal = g.id === 'sugarfree';
+  const geo = isCrystal
+    ? new THREE.IcosahedronGeometry(2.4, 0)
+    : new THREE.SphereGeometry(2.2, 48, 48);
+  const mesh = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color: g.color }));
+  if (isCrystal) {
+    mesh.add(new THREE.LineSegments(
+      new THREE.EdgesGeometry(geo),
+      new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 })
+    ));
+  }
+  mesh.userData = { type: 'star', idx: i };
+  group.add(mesh);
+
+  const halo = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: glowTexture(g.color), transparent: true, opacity: 0.85,
+    depthWrite: false, blending: THREE.AdditiveBlending
+  }));
+  halo.scale.setScalar(10);
+  halo.material.opacity = 0.6;
+  group.add(halo);
+
+  const light = new THREE.PointLight(new THREE.Color(g.color), 600, 90, 1.8);
+  group.add(light);
+
+  const n = DATA.companies.filter(c => c.galaxy === g.id).length;
+  const div = document.createElement('div');
+  div.className = 'e-label';
+  div.innerHTML = `
+    <div class="k" style="color:${g.color}">${ELEMENTS[g.id].kicker} · ${ELEMENTS[g.id].label.toUpperCase()}</div>
+    <div class="n">${esc(g.name)}</div>
+    <div class="d">&ldquo;${esc(g.need_state)}&rdquo;</div>
+    <div class="m">${n} COMPANIES &middot; ${esc(g.maturity).toUpperCase()} &middot; VC ${esc(g.vc_attractiveness).toUpperCase()}</div>`;
+  div.onclick = () => enterSystem(i);
+  const label = new CSS2DObject(div);
+  label.position.set(0, -5.8, 0);
+  group.add(label);
+
+  universe.add(group);
+  stars.push({ g, mesh, group, light, label, halo });
+});
+
+/* ================= planets (built per system) ================= */
+let planets = [];        // {c, mesh, label, angle, speed, radius, baseScale}
+let planetGroup = null;
+
+function buildSystem(star) {
+  planetGroup = new THREE.Group();
+  planetGroup.position.copy(star.group.position);
+  const comps = DATA.companies.filter(c => c.galaxy === star.g.id)
+    .sort((a, b) => b.scale - a.scale);
+  comps.forEach((c, i) => {
+    const radius = 6.5 + i * 2.9;
+    const size = 0.55 + c.scale * 0.30;
+    const tex = planetTexture(star.g.color, 7 + i * 131 + c.name.length);
+    const mesh = new THREE.Mesh(
+      new THREE.SphereGeometry(size, 36, 36),
+      new THREE.MeshStandardMaterial({
+        map: tex, roughness: 0.85, metalness: 0.05,
+        emissive: new THREE.Color(c.status === 'breakout' ? star.g.color : '#000000'),
+        emissiveIntensity: 0.0
+      })
+    );
+    mesh.userData = { type: 'planet', c, g: star.g };
+    mesh.rotation.z = 0.3;
+
+    if (c.status === 'exited') {
+      const ring = new THREE.Mesh(
+        new THREE.RingGeometry(size * 1.5, size * 2.05, 48),
+        new THREE.MeshBasicMaterial({ color: 0xdde6f8, transparent: true, opacity: 0.38, side: THREE.DoubleSide })
+      );
+      ring.rotation.x = Math.PI / 2.4;
+      mesh.add(ring);
+    }
+
+    const div = document.createElement('div');
+    div.className = 'p-label';
+    div.innerHTML = `
+      <div class="n"><i style="background:${geoColor[c.geo]}"></i>${esc(c.name)}</div>
+      <div class="g">${geoLabel[c.geo]}</div>`;
+    div.onclick = () => openDossier(c, star.g);
+    const label = new CSS2DObject(div);
+    label.position.set(0, -size - 0.9, 0);
+    mesh.add(label);
+
+    const angle = i * 2.39996;  // golden angle spread
+    planetGroup.add(mesh);
+    planets.push({ c, mesh, label, angle, speed: 0.10 / Math.sqrt(radius / 6.5), radius, baseScale: 1 });
+  });
+  scene.add(planetGroup);
+}
+
+function clearSystem() {
+  if (!planetGroup) return;
+  for (const p of planets) p.mesh.remove(p.label);
+  scene.remove(planetGroup);
+  planetGroup.traverse(o => {
+    if (o.geometry) o.geometry.dispose();
+    if (o.material) { if (o.material.map) o.material.map.dispose(); o.material.dispose(); }
+  });
+  planetGroup = null;
+  planets = [];
+}
+
+/* ================= camera & modes ================= */
+let mode = 'universe';
+let activeStar = null;
+let orbitAngle = 0.6;
+let tween = null;
+const camTarget = new THREE.Vector3(0, 0, 0);
+const mouse = { x: 0, y: 0 };
+addEventListener('mousemove', e => {
+  mouse.x = e.clientX / innerWidth - 0.5;
+  mouse.y = e.clientY / innerHeight - 0.5;
+});
+
+/* narrow viewports see a slimmer horizontal FOV, so pull the camera back so the
+   whole ring still fits. Desktop (aspect >= 1.7) keeps its original framing. */
+function aspectBoost() {
+  const ref = 1.7;
+  return camera.aspect >= ref ? 1 : ref / Math.max(camera.aspect, 0.42);
+}
+function universeCamPos(a) {
+  const d = 105 * aspectBoost();
+  return new THREE.Vector3(Math.sin(a) * d, (30 + Math.sin(a * 0.6) * 5) * aspectBoost(), Math.cos(a) * d);
+}
+function systemCamPos(p, mx, my) {
+  const k = aspectBoost();
+  return p.clone()
+    .add(p.clone().normalize().multiplyScalar(24 * k))
+    .add(new THREE.Vector3(mx, 9 * k - my, 0));
+}
+camera.position.copy(universeCamPos(orbitAngle));
+camera.lookAt(0, 0, 0);
+
+function flyTo(pos, target, dur) {
+  tween = {
+    t: 0, dur,
+    fromPos: camera.position.clone(), toPos: pos.clone(),
+    fromTarget: camTarget.clone(), toTarget: target.clone()
+  };
+}
+const easeInOut = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+
+function enterSystem(idx) {
+  if (mode === 'flying') return;
+  const star = stars[idx];
+  activeStar = star;
+  mode = 'flying';
+  clearSystem();
+  buildSystem(star);
+  // hide other labels
+  stars.forEach(s => { s.label.element.style.display = 'none'; });
+  const p = star.group.position;
+  flyTo(systemCamPos(p, 0, 0), p, 1.8);
+  setTimeout(() => { mode = 'system'; }, 1850);
+  document.getElementById('btn-back').classList.remove('hidden');
+  document.getElementById('crumb').innerHTML =
+    `UNIVERSE / ${ELEMENTS[star.g.id].label.toUpperCase()} / <b>${esc(star.g.name).toUpperCase()}</b> · ${esc(star.g.maturity).toUpperCase()} · VC ${esc(star.g.vc_attractiveness).toUpperCase()}`;
+  document.getElementById('hint').textContent = 'Click a planet for the investor page';
+}
+
+function backToUniverse() {
+  if (mode === 'flying') return;
+  closeDossier();
+  mode = 'flying';
+  stars.forEach(s => { s.label.element.style.display = ''; });
+  flyTo(universeCamPos(orbitAngle), new THREE.Vector3(0, 0, 0), 1.6);
+  setTimeout(() => { mode = 'universe'; clearSystem(); activeStar = null; }, 1650);
+  document.getElementById('btn-back').classList.add('hidden');
+  document.getElementById('crumb').innerHTML = 'UNIVERSE / <b>6 ELEMENTS · 31 COMPANIES · US + AU</b>';
+  document.getElementById('hint').textContent = 'Click an element star to fly in';
+}
+document.getElementById('btn-back').onclick = backToUniverse;
+addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.overlay.open').forEach(o => o.classList.remove('open'));
+    if (company.classList.contains('open')) closeDossier();
+    else if (mode === 'system') backToUniverse();
+  }
+});
+
+/* ================= picking ================= */
+const ray = new THREE.Raycaster();
+const clickPt = new THREE.Vector2();
+canvas.addEventListener('click', e => {
+  clickPt.x = (e.clientX / innerWidth) * 2 - 1;
+  clickPt.y = -(e.clientY / innerHeight) * 2 + 1;
+  ray.setFromCamera(clickPt, camera);
+  if (mode === 'universe') {
+    const hits = ray.intersectObjects(stars.map(s => s.mesh));
+    if (hits.length) enterSystem(hits[0].object.userData.idx);
+  } else if (mode === 'system') {
+    const hits = ray.intersectObjects(planets.map(p => p.mesh));
+    if (hits.length) {
+      const u = hits[0].object.userData;
+      openDossier(u.c, u.g);
+    }
+  }
+});
+canvas.addEventListener('mousemove', e => {
+  clickPt.x = (e.clientX / innerWidth) * 2 - 1;
+  clickPt.y = -(e.clientY / innerHeight) * 2 + 1;
+  ray.setFromCamera(clickPt, camera);
+  const targets = mode === 'universe' ? stars.map(s => s.mesh)
+                : mode === 'system' ? planets.map(p => p.mesh) : [];
+  canvas.style.cursor = targets.length && ray.intersectObjects(targets).length ? 'pointer' : 'default';
+});
+
+/* ================= main loop ================= */
+const clock = new THREE.Clock();
+function loop() {
+  const dt = Math.min(clock.getDelta(), 0.05);
+  const t = clock.elapsedTime;
+
+  // element stars idle motion
+  stars.forEach((s, i) => {
+    s.mesh.rotation.y += dt * 0.25;
+    if (s.g.id === 'sugarfree') s.mesh.rotation.x += dt * 0.18;
+    const pulse = 1 + 0.04 * Math.sin(t * 1.4 + i);
+    s.halo.scale.setScalar(10 * pulse);
+    s.group.position.y += Math.sin(t * 0.7 + i * 1.1) * 0.0035;
+  });
+
+  // planets orbit
+  for (const p of planets) {
+    p.angle += p.speed * dt;
+    p.mesh.position.set(Math.cos(p.angle) * p.radius, Math.sin(p.angle * 0.7) * 0.8, Math.sin(p.angle) * p.radius);
+    p.mesh.rotation.y += dt * 0.5;
+    if (p.c.status === 'breakout') {
+      p.mesh.material.emissiveIntensity = 0.25 + 0.2 * Math.sin(t * 2.4);
+    }
+  }
+
+  // camera
+  if (tween) {
+    tween.t += dt;
+    const k = easeInOut(Math.min(tween.t / tween.dur, 1));
+    camera.position.lerpVectors(tween.fromPos, tween.toPos, k);
+    camTarget.lerpVectors(tween.fromTarget, tween.toTarget, k);
+    if (tween.t >= tween.dur) tween = null;
+  } else if (mode === 'universe') {
+    orbitAngle += dt * 0.018;
+    const base = universeCamPos(orbitAngle);
+    camera.position.lerp(base.add(new THREE.Vector3(mouse.x * 6, -mouse.y * 4, 0)), 0.05);
+    camTarget.lerp(new THREE.Vector3(0, 0, 0), 0.05);
+  } else if (mode === 'system' && activeStar) {
+    const p = activeStar.group.position;
+    camera.position.lerp(systemCamPos(p, mouse.x * 4, mouse.y * 3), 0.04);
+    camTarget.lerp(p, 0.06);
+  }
+  camera.lookAt(camTarget);
+
+  composer.render();
+  labelRenderer.render(scene, camera);
+  requestAnimationFrame(loop);
+}
+loop();
+window.THREE_OK = true;
+</script>
+<script>
+/* CDN failure fallback */
+setTimeout(() => {
+  if (!window.THREE_OK) document.getElementById('fallback').style.display = 'flex';
+}, 5000);
+</script>
+</body>
+</html>

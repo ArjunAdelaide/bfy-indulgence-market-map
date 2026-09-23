@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Better-for-You Indulgence — interactive 3D space market map generator.
+Better-for-You Indulgence: interactive 3D space market map generator.
 
-Reads data/companies.json and emits output/index.html: a WebGL (three.js)
+Reads data/companies.json and emits docs/index.html: a WebGL (three.js)
 universe. Each consumer need-state is a glowing element star; click one and
 the camera flies into its system, where companies orbit as lit, textured
 planets. Click a planet for a full-screen, SpaceX-style company page.
@@ -17,9 +17,21 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 DATA = ROOT / "data" / "companies.json"
-OUT = ROOT / "output" / "index.html"
+OUT = ROOT / "docs" / "index.html"
 
-TEMPLATE = r"""<title>__TITLE__</title>
+TEMPLATE = r"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>__TITLE__</title>
+<meta name="description" content="__DESC__">
+<meta property="og:title" content="__TITLE__: a US + Australia market map">
+<meta property="og:description" content="__DESC__">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arjunadelaide.github.io/bfy-indulgence-market-map/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <script type="importmap">
 { "imports": {
@@ -195,6 +207,8 @@ TEMPLATE = r"""<title>__TITLE__</title>
     .sheet h2 { font-size: 20px; }
   }
 </style>
+</head>
+<body>
 
 <canvas id="scene"></canvas>
 <div id="labels"></div>
@@ -212,7 +226,7 @@ TEMPLATE = r"""<title>__TITLE__</title>
   <button class="btn hidden" id="btn-back">&larr; Universe</button>
 </header>
 
-<div class="crumb" id="crumb">UNIVERSE / <b>6 ELEMENTS · 30 COMPANIES · US + AU</b></div>
+<div class="crumb" id="crumb">UNIVERSE / <b>__COUNTS__</b></div>
 
 <div class="legend">
   <span><i class="dot us"></i>US</span>
@@ -234,17 +248,17 @@ TEMPLATE = r"""<title>__TITLE__</title>
     <h2>The 1-Page Thesis</h2>
     <div class="mono-sub">BETTER-FOR-YOU INDULGENCE · ARJUN KULSHRESTHA · __UPDATED__</div>
     <h3>Why now</h3>
-    <p>Health stopped being a sacrifice aesthetic and became a status aesthetic. Protein, gut health and "no added sugar" are now how mainstream consumers shop the treat aisle — and GLP-1 adoption (~1 in 8 US adults) is compressing appetite while raising the bar for what a snack must justify. Indulgence occasions aren't disappearing; they're being re-priced and re-formulated.</p>
+    <p>Health stopped being a sacrifice aesthetic and became a status aesthetic. Protein, gut health and "no added sugar" are now how mainstream consumers shop the treat aisle, and GLP-1 adoption (~1 in 8 US adults) is compressing appetite while raising the bar for what a snack must justify. Indulgence occasions aren't disappearing; they're being re-priced and re-formulated.</p>
     <h3>The proof it's venture-scale</h3>
-    <p>PepsiCo paid <b>$1.95B for Poppi</b> (2025). OLIPOP reached a <b>$1.85B valuation, profitably</b>. Hershey paid <b>~$750M for LesserEvil</b>; PepsiCo <b>$1.2B for Siete</b>. <b>David</b> hit ~$100M year-one revenue at a $725M valuation. Strategics have stalled innovation engines and are paying 3–4x revenue for brands that own a need-state.</p>
+    <p>PepsiCo paid <b>$1.95B for Poppi</b> (2025). OLIPOP reached a <b>$1.85B valuation, profitably</b>. Hershey paid <b>~$750M for LesserEvil</b>; PepsiCo <b>$1.2B for Siete</b>. <b>David</b> hit ~$100M year-one revenue at a $725M valuation, then raised at <b>$2.25B</b> in September 2026. Strategics have stalled innovation engines and are paying 3–4x revenue for brands that own a need-state.</p>
     <h3>Why startups win</h3>
     <p>Incumbents can't make these products without indicting their core portfolio, and their brands carry zero permission in health. Startups win on founder taste, formulation speed, and audiences they bring with them (Feastables: $0&rarr;$250M in &lt;3 yrs on creator distribution).</p>
     <h3>The Australia angle</h3>
-    <p>AU runs the US playbook with a 2–3 year lag, a chemist-channel beachhead US brands don't have (Chemist Warehouse), the world's most consolidated grocery duopoly (brutal, but national in one deal), and structural kids'-snack demand via school canteen policy. Remedy (~A$163M rev) and Noshu (A$4M&rarr;A$38M in 4 yrs) prove local scale; FUNDAY proves exportability.</p>
+    <p>AU runs the US playbook with a 2–3 year lag, a chemist-channel beachhead US brands don't have (Chemist Warehouse), the world's most consolidated grocery duopoly (brutal, but national in one deal), and structural kids'-snack demand via school canteen policy. Remedy (~A$163M rev) and Noshu (A$4M&rarr;A$38M in 4 yrs) prove local scale; FUNDAY proves exportability; NOON went from national Woolworths (Jan 2026) to about 2,000 US Target stores (Aug 2026).</p>
     <h3>What the best companies understand</h3>
-    <p>Taste parity is the entry ticket, not the win. The win is <b>repeat purchase</b> (habit formats beat novelty), <b>supply-chain ownership</b> (David bought its ingredient supplier; LesserEvil self-manufactures), and <b>distribution as moat</b> — a creator audience, a pharmacy chain, or a school canteen list.</p>
+    <p>Taste parity is the entry ticket, not the win. The win is <b>repeat purchase</b> (habit formats beat novelty), <b>supply-chain ownership</b> (David bought its ingredient supplier; LesserEvil self-manufactures), and <b>distribution as moat</b>: a creator audience, a pharmacy chain, or a school canteen list.</p>
     <h3>Where I'd be careful</h3>
-    <p>US healthy soda is post-peak for new entrants. Gummies are crowded. Claims risk is real (Poppi settled a prebiotic class action pre-exit). And the best operators (Chomps, ~$900M rev, near-bootstrapped) sometimes don't need venture money at all — founder selection is the whole game.</p>
+    <p>US healthy soda is post-peak for new entrants. Gummies are crowded. Claims risk is real (Poppi settled a prebiotic class action pre-exit). And the best operators (Chomps, ~$900M rev, near-bootstrapped) sometimes don't need venture money at all. Founder selection is the whole game.</p>
   </div>
 </div>
 
@@ -252,13 +266,13 @@ TEMPLATE = r"""<title>__TITLE__</title>
   <div class="sheet">
     <button class="btn close" onclick="toggleOverlay('ov-howto')">Close &nbsp;&times;</button>
     <h2>How to read this map</h2>
-    <div class="mono-sub">ORIENTATION BRIEF — 30 SECONDS</div>
+    <div class="mono-sub">ORIENTATION BRIEF · 30 SECONDS</div>
     <ul>
       <li><b>The six element stars are consumer need-states</b>, not product aisles. Fire is the drive to earn a treat (protein); Water is the ritual of refreshment; Crystal is sweetness with the sugar removed; Terra is grounded comfort food; Flora is the living gut; Wind is culture and the lunchbox.</li>
       <li><b>Click a star</b> and the camera flies into its system. <b>Planets are companies</b>: size = scale signal, a ring = acquired/exited (kept as pricing comps), a pulse = breakout in flight, the label dot = US / AU / North America.</li>
       <li><b>Click a planet</b> for the investor page: positioning, differentiation, channels, funding signal, and my take.</li>
-      <li><b>30 companies, startup-weighted, ~50/50 US and Australia.</b> Facts are flagged verified / company-reported / estimate, with sources.</li>
-      <li>Press <b>Esc</b> to fly back out. Drag does nothing — this map flies itself.</li>
+      <li><b>__NC__ companies, startup-weighted, ~50/50 US and Australia.</b> Facts are flagged verified / company-reported / estimate, with sources.</li>
+      <li>Press <b>Esc</b> to fly back out. Drag does nothing; this map flies itself.</li>
     </ul>
   </div>
 </div>
@@ -284,7 +298,7 @@ function openDossier(c, g) {
   const host = u => { try { return new URL(u).hostname.replace('www.', ''); } catch { return u; } };
   document.getElementById('company-body').innerHTML = `
     <div class="c-kicker"><span style="color:${g.color}">${ELEMENTS[g.id].label.toUpperCase()} / ${esc(g.name).toUpperCase()}</span>
-      &nbsp;&mdash;&nbsp; ${geoLabel[c.geo]} &nbsp;&mdash;&nbsp; ${statusTxt}</div>
+      &nbsp;·&nbsp; ${geoLabel[c.geo]} &nbsp;·&nbsp; ${statusTxt}</div>
     <div class="c-name">${esc(c.name)}</div>
     <div class="c-pos">${esc(c.positioning)}.</div>
     <div class="c-rule" style="background:linear-gradient(90deg, ${g.color}, rgba(255,255,255,.05))"></div>
@@ -418,7 +432,7 @@ scene.add(starField(5200, 150, 900, 1.5, 0.85, 0xcfe0ff));
 scene.add(starField(1400, 120, 700, 2.6, 0.6, 0xfff0d8));
 scene.add(starField(2400, 300, 1400, 1.1, 0.5, 0x9fb6ff));
 
-// faint distant nebula sprites — restrained, not wallpaper
+// faint distant nebula sprites, restrained, not wallpaper
 const nebTints = ['#2a2a55', '#1d2b50', '#33224d'];
 for (let i = 0; i < 5; i++) {
   const sp = new THREE.Sprite(new THREE.SpriteMaterial({
@@ -476,7 +490,7 @@ DATA.galaxies.forEach((g, i) => {
   const div = document.createElement('div');
   div.className = 'e-label';
   div.innerHTML = `
-    <div class="k" style="color:${g.color}">${ELEMENTS[g.id].kicker} — ${ELEMENTS[g.id].label.toUpperCase()}</div>
+    <div class="k" style="color:${g.color}">${ELEMENTS[g.id].kicker} · ${ELEMENTS[g.id].label.toUpperCase()}</div>
     <div class="n">${esc(g.name)}</div>
     <div class="d">&ldquo;${esc(g.need_state)}&rdquo;</div>
     <div class="m">${n} COMPANIES &middot; ${esc(g.maturity).toUpperCase()} &middot; VC ${esc(g.vc_attractiveness).toUpperCase()}</div>`;
@@ -563,7 +577,7 @@ addEventListener('mousemove', e => {
   mouse.y = e.clientY / innerHeight - 0.5;
 });
 
-/* narrow viewports see a slimmer horizontal FOV — pull the camera back so the
+/* narrow viewports see a slimmer horizontal FOV, so pull the camera back so the
    whole ring still fits. Desktop (aspect >= 1.7) keeps its original framing. */
 function aspectBoost() {
   const ref = 1.7;
@@ -605,7 +619,7 @@ function enterSystem(idx) {
   setTimeout(() => { mode = 'system'; }, 1850);
   document.getElementById('btn-back').classList.remove('hidden');
   document.getElementById('crumb').innerHTML =
-    `UNIVERSE / ${ELEMENTS[star.g.id].label.toUpperCase()} / <b>${esc(star.g.name).toUpperCase()}</b> — ${esc(star.g.maturity).toUpperCase()} · VC ${esc(star.g.vc_attractiveness).toUpperCase()}`;
+    `UNIVERSE / ${ELEMENTS[star.g.id].label.toUpperCase()} / <b>${esc(star.g.name).toUpperCase()}</b> · ${esc(star.g.maturity).toUpperCase()} · VC ${esc(star.g.vc_attractiveness).toUpperCase()}`;
   document.getElementById('hint').textContent = 'Click a planet for the investor page';
 }
 
@@ -617,7 +631,7 @@ function backToUniverse() {
   flyTo(universeCamPos(orbitAngle), new THREE.Vector3(0, 0, 0), 1.6);
   setTimeout(() => { mode = 'universe'; clearSystem(); activeStar = null; }, 1650);
   document.getElementById('btn-back').classList.add('hidden');
-  document.getElementById('crumb').innerHTML = 'UNIVERSE / <b>6 ELEMENTS · 30 COMPANIES · US + AU</b>';
+  document.getElementById('crumb').innerHTML = 'UNIVERSE / <b>__COUNTS__</b>';
   document.getElementById('hint').textContent = 'Click an element star to fly in';
 }
 document.getElementById('btn-back').onclick = backToUniverse;
@@ -713,6 +727,8 @@ setTimeout(() => {
   if (!window.THREE_OK) document.getElementById('fallback').style.display = 'flex';
 }, 5000);
 </script>
+</body>
+</html>
 """
 
 
@@ -720,12 +736,15 @@ def main() -> None:
     data = json.loads(DATA.read_text())
     html = (TEMPLATE
         .replace("__TITLE__", data["meta"]["title"])
+        .replace("__DESC__", f"{len(data['companies'])} better-for-you food and beverage brands across the US and Australia, mapped by consumer need-state, with an investor memo. By Arjun Kulshrestha.")
         .replace("__SUBTITLE__", data["meta"]["subtitle"])
         .replace("__UPDATED__", data["meta"]["updated"].upper())
+        .replace("__COUNTS__", f"{len(data['galaxies'])} ELEMENTS · {len(data['companies'])} COMPANIES · US + AU")
+        .replace("__NC__", str(len(data["companies"])))
         .replace("__DATA__", json.dumps(data, ensure_ascii=False)))
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text(html)
-    print(f"Built {OUT} — {len(data['galaxies'])} element stars, "
+    print(f"Built {OUT}: {len(data['galaxies'])} element stars, "
           f"{len(data['companies'])} planets, {OUT.stat().st_size//1024} KB (WebGL)")
 
 

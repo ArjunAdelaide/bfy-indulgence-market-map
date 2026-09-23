@@ -1,618 +1,638 @@
 {
-  "meta": {
-    "title": "Better-for-You Indulgence",
-    "subtitle": "A US + Australia market map of guilt-free food & beverage — by Arjun Kulshrestha",
-    "updated": "June 2026",
-    "author": "Arjun Kulshrestha"
+ "meta": {
+  "title": "Better-for-You Indulgence",
+  "subtitle": "A US + Australia market map of guilt-free food & beverage, by Arjun Kulshrestha",
+  "updated": "September 2026",
+  "author": "Arjun Kulshrestha"
+ },
+ "galaxies": [
+  {
+   "id": "protein",
+   "name": "Protein as Pleasure",
+   "tagline": "Dessert-coded protein. Candy bars that happen to have macros.",
+   "need_state": "I want a treat that earns its place in my day.",
+   "why_care": "Protein has replaced 'low fat' as the universal health heuristic. The winning brands code as candy, cereal and popcorn, not gym supplements, which unlocks mass grocery and convenience channels.",
+   "maturity": "Scaling",
+   "vc_attractiveness": "High",
+   "risks": "Formulation arms race; novel-ingredient scrutiny (e.g. EPG); celebrity-brand noise; incumbents (Quest, Barebells) own shelf space.",
+   "color": "#ff6b35",
+   "x": 22,
+   "y": 30
   },
-  "galaxies": [
-    {
-      "id": "protein",
-      "name": "Protein as Pleasure",
-      "tagline": "Dessert-coded protein. Candy bars that happen to have macros.",
-      "need_state": "I want a treat that earns its place in my day.",
-      "why_care": "Protein has replaced 'low fat' as the universal health heuristic. The winning brands code as candy, cereal and popcorn — not gym supplements — which unlocks mass grocery and convenience channels.",
-      "maturity": "Scaling",
-      "vc_attractiveness": "High",
-      "risks": "Formulation arms race; novel-ingredient scrutiny (e.g. EPG); celebrity-brand noise; incumbents (Quest, Barebells) own shelf space.",
-      "color": "#ff6b35",
-      "x": 22,
-      "y": 30
-    },
-    {
-      "id": "sugarfree",
-      "name": "Sweet, Without the Sugar",
-      "tagline": "Candy, chocolate and dessert with the regret removed.",
-      "need_state": "I refuse to give up sweets — take out the sugar, not the joy.",
-      "why_care": "Sugar is the single most avoided ingredient in both the US and Australia. The unlock was taste parity plus fun branding — these brands sell in the candy aisle and at the chemist, not the diet aisle.",
-      "maturity": "Scaling → Crowded (gummies)",
-      "vc_attractiveness": "Medium-High",
-      "risks": "Sweetener fatigue (sugar alcohols, stevia aftertaste); private label moves fast; single-hero-SKU concentration.",
-      "color": "#e84393",
-      "x": 68,
-      "y": 22
-    },
-    {
-      "id": "drinks",
-      "name": "Functional Refreshment",
-      "tagline": "Soda rebuilt: prebiotics, no sugar, real flavour.",
-      "need_state": "I want the ritual of a Coke without drinking a Coke.",
-      "why_care": "The category that proved BFY indulgence is venture-scale: Poppi exited to PepsiCo for $1.95B and OLIPOP was last valued at $1.85B. Australia is running the same playbook 2–3 years behind the US.",
-      "maturity": "Crowded (US) / Scaling (AU)",
-      "vc_attractiveness": "Medium (US) / High (AU)",
-      "risks": "US shelf is saturated post-Poppi; flavour/format copycats; big-soda response (Coke Simply Pop); prebiotic claims litigation.",
-      "color": "#00b8d4",
-      "x": 46,
-      "y": 64
-    },
-    {
-      "id": "gut",
-      "name": "Gut Health & Free-From",
-      "tagline": "Indulgence engineered for sensitive stomachs and allergies.",
-      "need_state": "I want to eat like everyone else without paying for it later.",
-      "why_care": "Gut health is the fastest-growing wellness claim, and GLP-1 users need fibre and digestive support. Free-from brands win fierce loyalty because the alternative for these consumers is exclusion, not another brand.",
-      "maturity": "Emerging",
-      "vc_attractiveness": "High",
-      "risks": "Niche-to-mass leap is hard; medical-adjacent claims invite regulator attention; low-FODMAP is a small beachhead.",
-      "color": "#9c27b0",
-      "x": 82,
-      "y": 55
-    },
-    {
-      "id": "comfort",
-      "name": "Clean-Label Comfort",
-      "tagline": "Mac & cheese, ramen, tacos and snacks — with the label cleaned up.",
-      "need_state": "I want childhood comfort food I don't have to hide in my pantry.",
-      "why_care": "Nostalgia is the cheapest customer acquisition there is. Upgrading an existing habit (ramen, mac & cheese, popcorn) beats inventing a new one — and acquirers agree: Siete went for $1.2B, LesserEvil for ~$750M.",
-      "maturity": "Scaling",
-      "vc_attractiveness": "High",
-      "risks": "Premium price vs. $1 incumbent comparison; velocity pressure in mainstream grocery; 'clean label' is unregulated language.",
-      "color": "#ffc107",
-      "x": 17,
-      "y": 56
-    },
-    {
-      "id": "culture",
-      "name": "Culture-Led & Kids' Treats",
-      "tagline": "Audience-first brands and lunchbox-safe indulgence.",
-      "need_state": "I buy the story (or my kids' lunchbox rules decide for me).",
-      "why_care": "Distribution is the moat — creators bring their own. Feastables hit $250M revenue in under three years off MrBeast's audience. Meanwhile parents are an underserved, rule-driven buyer (school policies, sugar limits) with high repeat purchase.",
-      "maturity": "Emerging",
-      "vc_attractiveness": "Medium",
-      "risks": "Key-person risk on creator brands; kids' marketing regulation; novelty purchase vs. true repeat.",
-      "color": "#4caf50",
-      "x": 70,
-      "y": 82
-    }
-  ],
-  "companies": [
-    {
-      "name": "David",
-      "geo": "US",
-      "galaxy": "protein",
-      "product": "28g-protein, 0g-sugar, 150-calorie bars (and expanding formats)",
-      "positioning": "The most efficient protein per calorie, branded like a luxury object, not a supplement",
-      "target": "Protein-first consumers and GLP-1 users who treat macros as a daily budget",
-      "differentiation": "Vertical ingredient control — used its Series A to buy Epogee, sole supplier of the EPG fat replacer behind its calorie math",
-      "channels": "DTC-first, now 3,000+ US retail doors",
-      "vc_take": "Category-defining velocity: ~$100M revenue in year one and a supply-chain moat most CPG brands never build. The founder set (Peter Rahal, ex-RXBAR) is the operator archetype this thesis bets on.",
-      "signal": "$75M Series A (May 2025) led by Greenoaks with Valor; $725M valuation; ~$100M first-year revenue — verified",
-      "status": "breakout",
-      "scale": 5,
-      "sources": [
-        "https://www.businesswire.com/news/home/20250529749264/en/David-Closes-$75-Million-Series-A-Funding-Round",
-        "https://fortune.com/2025/10/13/david-protein-bars-rx-venture-food-startups-cod/"
-      ]
-    },
-    {
-      "name": "Chomps",
-      "geo": "US",
-      "galaxy": "protein",
-      "product": "Grass-fed beef, venison and turkey meat sticks",
-      "positioning": "Clean-ingredient protein snacking for everyone, not just hunters and gym-goers",
-      "target": "Whole30 / paleo / protein-conscious mainstream shoppers, increasingly GLP-1 users",
-      "differentiation": "Ingredient discipline plus near-bootstrapped capital efficiency — founders still control the company",
-      "channels": "Started DTC/Amazon; now mass retail (Costco, Target, Walmart, c-stores)",
-      "vc_take": "The bear case for venture in this category: ~$900M revenue built with almost no dilution. Proof the category creates real businesses — and a warning that the best operators may not need your cheque.",
-      "signal": "Est. ~$900M 2025 revenue (Forbes estimate); $100M credit line with Wells Fargo (Apr 2025) — estimate + verified facility",
-      "status": "independent",
-      "scale": 5,
-      "sources": [
-        "https://www.inc.com/christopher-yang/how-a-meat-stick-brand-built-on-6500-reached-500-million/91281289",
-        "https://www.globenewswire.com/news-release/2025/04/24/3067482/0/en/Chomps-Secures-100-Million-Revolving-Line-of-Credit-with-Wells-Fargo.html"
-      ]
-    },
-    {
-      "name": "Magic Spoon",
-      "geo": "US",
-      "galaxy": "protein",
-      "product": "High-protein, zero-sugar 'childhood' cereal and treats",
-      "positioning": "Saturday-morning nostalgia for adults with macros",
-      "target": "Millennials who quit cereal for health reasons but miss it",
-      "differentiation": "First to make protein taste like Froot Loops; strong podcast/creator DTC engine before retail",
-      "channels": "DTC-led launch, now Target, Walmart, Costco, Amazon",
-      "vc_take": "Textbook DTC-to-retail transition and proof that 'remake a nostalgic aisle' works — but also a case study in how CAC-heavy DTC growth must convert to retail velocity to justify ~$209M raised.",
-      "signal": "~$209M total funding across 5 rounds (Tracxn); $85M round in 2022 alongside Target launch — verified",
-      "status": "independent",
-      "scale": 4,
-      "sources": [
-        "https://tracxn.com/d/companies/magic-spoon/__1enHSEZ23o_smWdM-7M8hNC-v63fHmYYTubxCLk_viA",
-        "https://www.fooddive.com/news/magic-spoon-raises-85m-better-for-you-cereal-retail/625417/"
-      ]
-    },
-    {
-      "name": "Khloud",
-      "geo": "US",
-      "galaxy": "protein",
-      "product": "Protein popcorn (7g protein per serve)",
-      "positioning": "Celebrity-founded everyday protein snacking",
-      "target": "Mass Target shoppers; Kardashian audience crossover",
-      "differentiation": "Day-one national distribution via celebrity leverage; popcorn as an unclaimed protein format",
-      "channels": "Target nationwide at launch, expanding mass retail",
-      "vc_take": "A live experiment in whether celebrity distribution can substitute for brand-building. Watch repeat purchase, not launch velocity — that's the entire question with talent-led CPG.",
-      "signal": "$12M oversubscribed round (Apr 2025): Serena Ventures, WME, Shrug, K5 — verified",
-      "status": "independent",
-      "scale": 2,
-      "sources": [
-        "https://techcrunch.com/2025/04/22/khloe-kardashian-launches-consumer-brand-backed-by-serena-ventures-wme/",
-        "https://athletechnews.com/khloe-kardashians-khloud-lands-15m-in-funding-for-high-protein-popcorn/"
-      ]
-    },
-    {
-      "name": "Macro Mike",
-      "geo": "AU",
-      "galaxy": "protein",
-      "product": "Plant-based protein powders, baking mixes and peanut-butter treats",
-      "positioning": "Dessert-flavoured plant protein with a gut-health angle",
-      "target": "Australian wellness consumers; dairy-avoiders who still want brownies",
-      "differentiation": "Built a dessert-first plant protein brand from Burleigh Heads with zero external capital",
-      "channels": "DTC-led, plus AU health retail and export",
-      "vc_take": "The AU capital-efficiency archetype: 35+ staff, self-funded since 2016. Interesting both as a scaled bootstrapper and as a signal that AU BFY brands historically grew without venture — that's changing.",
-      "signal": "Self-funded; 35+ staff (Business News Australia) — company-reported",
-      "status": "independent",
-      "scale": 3,
-      "sources": [
-        "https://www.businessnewsaustralia.com/articles/macro-mike-growth-pushed-by-passion-and-peanuts.html"
-      ]
-    },
-    {
-      "name": "Vitawerx",
-      "geo": "AU",
-      "galaxy": "protein",
-      "product": "Protein-coated chocolate, wafers and choc-coated nuts",
-      "positioning": "'Healthy never tasted so good' — chocolate-first, protein hidden inside",
-      "target": "AU gym-adjacent consumers and health-store shoppers trading up from candy bars",
-      "differentiation": "Owns the protein-chocolate niche in AU health retail; broad SKU range across formats",
-      "channels": "AU health food stores, supplement retail, pharmacy, export to NZ",
-      "vc_take": "Australia's answer to the 'candy-coded protein' trend, pre-institutional-capital. Exactly the profile a US growth fund hunting a 'David of Australia' narrative would screen.",
-      "signal": "Founded 2015; nationally distributed in AU health retail; no disclosed external funding — company-reported",
-      "status": "independent",
-      "scale": 2,
-      "sources": [
-        "https://vitawerx.com/pages/about-us"
-      ]
-    },
-    {
-      "name": "Chief Nutrition",
-      "geo": "AU",
-      "galaxy": "protein",
-      "product": "Grass-fed collagen protein bars, biltong and collagen powders",
-      "positioning": "Real-food protein for health-span — co-founded by a nutritionist and trainers",
-      "target": "Paleo/whole-food Australians; CrossFit and longevity communities",
-      "differentiation": "Whole-food ingredient list in a category full of isolates and syrups; founder credibility in fitness media",
-      "channels": "DTC, Woolworths/health retail, gyms; raised via Equitise equity crowdfunding",
-      "vc_take": "Community-funded with a profitable ~A$4M run-rate — small, but the crowdfunding cap table is itself a brand-love signal. A seed-stage bet on the 'meat-snack-meets-collagen' wedge in AU.",
-      "signal": "~A$4M annual revenue run-rate, profitable, revenue doubled YoY (Equitise raise materials) — company-reported",
-      "status": "independent",
-      "scale": 1,
-      "sources": [
-        "https://www.equitise.com/offer/chief2023-offer/"
-      ]
-    },
-    {
-      "name": "FUNDAY Natural Sweets",
-      "geo": "AU",
-      "galaxy": "sugarfree",
-      "product": "No-added-sugar, prebiotic-fibre gummies and chocolate",
-      "positioning": "Proper lollies, zero guilt — fun-first branding, not diet branding",
-      "target": "AU snackers and ex-candy-lovers; expanding to US",
-      "differentiation": "No sugar alcohols (the SmartSweets gut-complaint weakness) and 7g prebiotic fibre per serve; chemist-channel beachhead",
-      "channels": "Chemist Warehouse nationwide, Coles/Woolworths, Amazon AU, now US entry (fundaysweets.us)",
-      "vc_take": "The single most exportable AU brand on this map. Ran the SmartSweets playbook with a better formulation and a pharmacy channel insight — its US expansion is the trade I'd want to underwrite.",
-      "signal": "Bootstrapped at launch (founder stated no external funding plans, 2022); national Chemist Warehouse + grocery distribution; US site live — verified distribution, funding status company-reported",
-      "status": "independent",
-      "scale": 2,
-      "sources": [
-        "https://www.foodnavigator-asia.com/Article/2022/01/05/Better-for-you-candy-Australia-s-Funday-outlines-domestic-and-international-expansion-strategy/",
-        "https://www.fundaysweets.us/"
-      ]
-    },
-    {
-      "name": "SmartSweets",
-      "geo": "NA",
-      "galaxy": "sugarfree",
-      "product": "Low-sugar gummies and candy",
-      "positioning": "'Kick sugar, keep candy'",
-      "target": "Mainstream North American candy buyers cutting sugar",
-      "differentiation": "First mover at scale in low-sugar candy; founder-story-led brand (Tara Bosch, started at 21)",
-      "channels": "Mass retail across North America",
-      "vc_take": "The category's first big exit comp: TPG took majority control at $360M in 2020, four years from founding. Defines both the upside and the ceiling question — was that a venture outcome or a great PE outcome?",
-      "signal": "Majority stake sold to TPG Growth at $360M (Oct 2020) — verified",
-      "status": "exited",
-      "scale": 4,
-      "sources": [
-        "https://www.nosh.com/news/2020/smart-money-smartsweets-sells-to-tpg-brings-on-new-ceo/"
-      ]
-    },
-    {
-      "name": "Noshu",
-      "geo": "AU",
-      "galaxy": "sugarfree",
-      "product": "Sugar-free donuts, baking mixes, frostings and chocolate ('Snackles')",
-      "positioning": "Real dessert experiences — donuts, not 'diet bars' — with 97–99% less sugar",
-      "target": "AU supermarket shoppers, diabetics, low-carb households",
-      "differentiation": "Proprietary sweetener systems built over a decade; owns the sugar-free bakery shelf in Coles/Woolworths",
-      "target_note": "",
-      "channels": "Coles, Woolworths, export plans (UK, EU, China)",
-      "vc_take": "A$4M to A$38M in four years inside mainstream grocery, now raising its first external round for international expansion — a rare AU growth-equity entry point with proven velocity data.",
-      "signal": "~A$38M expected sales; first external raise underway; projecting 2.5x in 3 years (SmartCompany / company) — company-reported",
-      "status": "independent",
-      "scale": 3,
-      "sources": [
-        "https://www.smartcompany.com.au/entrepreneurs/australian-brand-noshu-grew-4-million-revenue-to-40-million-in-four-years/"
-      ]
-    },
-    {
-      "name": "Mid-Day Squares",
-      "geo": "NA",
-      "galaxy": "sugarfree",
-      "product": "Functional chocolate squares (protein + fibre, low sugar)",
-      "positioning": "'Chocolate that works as hard as you' — built in public on social",
-      "target": "Millennial/Gen Z snackers who follow the founders' content",
-      "differentiation": "The founders ARE the media channel — daily behind-the-scenes content turned a chocolate bar into a show",
-      "channels": "Whole Foods + natural channel US/Canada, DTC",
-      "vc_take": "Best-in-class example of founder-as-distribution: organic content replacing paid CAC. The question is whether content-led love converts to mainstream velocity beyond the natural channel.",
-      "signal": "~$16.5M raised over 3 rounds (Tracxn/Crunchbase) — verified",
-      "status": "independent",
-      "scale": 2,
-      "sources": [
-        "https://www.crunchbase.com/organization/mid-day-squares",
-        "https://tracxn.com/d/companies/mid-day-squares/__3S6aXZP2tLgypq6g1A0SvwJuzm-BdOCkrO0DAu-8hWg"
-      ]
-    },
-    {
-      "name": "Denada",
-      "geo": "AU",
-      "galaxy": "sugarfree",
-      "product": "Sugar-free ice cream",
-      "positioning": "Indulgent ice cream, zero sugar, no asterisks on taste",
-      "target": "AU households cutting sugar; diabetic and keto consumers",
-      "differentiation": "First-mover in AU sugar-free ice cream; built distribution to 1,250+ stores in three years with no outside capital",
-      "channels": "AU supermarkets and independents; first export markets",
-      "vc_take": "Frozen is the hardest BFY logistics problem (cold chain, slotting), and Denada cracked AU shelf bootstrapped. A capital injection here is a distribution-expansion bet, not a product bet.",
-      "signal": "1,250+ AU stores within 3 years, no outside investment at launch; now exporting — company-reported",
-      "status": "independent",
-      "scale": 2,
-      "sources": [
-        "https://www.foodanddrinkbusiness.com.au/news/denada-lands-its-first-export-market"
-      ]
-    },
-    {
-      "name": "OLIPOP",
-      "geo": "US",
-      "galaxy": "drinks",
-      "product": "Prebiotic soda with classic flavours (Vintage Cola, Root Beer)",
-      "positioning": "A new kind of soda: nostalgia + digestive health, science-forward",
-      "target": "Mass grocery shoppers replacing legacy soda",
-      "differentiation": "Deepest formulation credibility in the set (microbiome research roots); profitable at scale",
-      "channels": "Mass retail nationwide, DTC",
-      "vc_take": "The standing proof that BFY beverage is venture-scale and can be PROFITABLE: $400M+ sales, first profit in 2024, $1.85B valuation. The remaining question is exit path now that Pepsi bought its rival.",
-      "signal": "$50M raise at $1.85B valuation (Feb 2025); $400M+ 2024 sales; profitable — verified",
-      "status": "breakout",
-      "scale": 5,
-      "sources": [
-        "https://www.cnbc.com/2025/03/17/pepsico-buys-prebiotic-soda-brand-poppi-for-more-than-1point6-billion.html",
-        "https://www.marketingdive.com/news/pepsico-buys-poppi-2B-pepsi-purchase-prebiotic-healthy-soda-better-for-you-drink-olipop-simply-pop/742679/"
-      ]
-    },
-    {
-      "name": "Poppi",
-      "geo": "US",
-      "galaxy": "drinks",
-      "product": "Prebiotic soda (apple-cider-vinegar origin story)",
-      "positioning": "Soda's fun, social, brand-led comeback — Super Bowl ads and merch",
-      "target": "Gen Z and millennial ex-soda drinkers",
-      "differentiation": "Marketing velocity: TikTok-native brand building that outran a better-funded rival on cultural relevance",
-      "channels": "Mass retail, Amazon, DTC",
-      "vc_take": "The exit that validated the whole map: PepsiCo paid $1.95B in 2025 off ~$500M 2024 sales. Also a cautionary tale — prebiotic claims drew a class-action settlement before the deal closed.",
-      "signal": "Acquired by PepsiCo for $1.95B (Mar 2025); ~$500M 2024 sales — verified",
-      "status": "exited",
-      "scale": 5,
-      "sources": [
-        "https://www.pepsico.com/our-stories/press-release/pepsico-to-acquire-poppi03172025",
-        "https://www.cnn.com/2025/03/17/business/pepsi-buys-poppi/"
-      ]
-    },
-    {
-      "name": "Remedy Drinks",
-      "geo": "AU",
-      "galaxy": "drinks",
-      "product": "Live-cultured kombucha, prebiotic Sodaly, ACV switchel, shots",
-      "positioning": "Fermentation-led, no-sugar functional drinks from a Melbourne kitchen to 25,000 outlets",
-      "target": "Mainstream AU shoppers; expanding US/EU/Asia",
-      "differentiation": "Real fermentation at industrial scale; AU's #1 kombucha with L Catterton backing",
-      "channels": "25,000+ outlets in AU plus export; unified global entity from April 2025",
-      "vc_take": "Australia's functional-beverage anchor asset (~A$163M revenue). Its global consolidation move reads as exit grooming — the comp every AU beverage seed deal will be priced against.",
-      "signal": "~A$162.7M FY2025 revenue (IBISWorld); Series B from L Catterton & Kin Group (2023) — verified",
-      "status": "breakout",
-      "scale": 4,
-      "sources": [
-        "https://www.ibisworld.com/australia/company/remedy-drinks-pty-ltd/461825/",
-        "https://www.prnewswire.com/news-releases/remedy-drinks-closes-series-b-funding-round-and-appoints-new-c-suite-sales-leader-to-accelerate-global-growth-301750480.html"
-      ]
-    },
-    {
-      "name": "Naked Life",
-      "geo": "AU",
-      "galaxy": "drinks",
-      "product": "100% natural sugar-free sodas and non-alcoholic cocktails/spirits",
-      "positioning": "Premium sugar-free refreshment without artificial sweeteners",
-      "target": "AU mainstream grocery + the sober-curious overlap",
-      "differentiation": "Straddles two need-states (no sugar + no alcohol) with one brand; national grocery from a 2016 kitchen start",
-      "channels": "Woolworths, Coles, IGA, Dan Murphy's",
-      "vc_take": "Quiet national distribution across both grocery AND liquor channels is a structural advantage no US healthy-soda brand has. An obvious platform for a US prebiotic-style line extension.",
-      "signal": "Stocked nationally in Woolworths, Coles, IGA, Dan Murphy's; founded 2016 — company-reported",
-      "status": "independent",
-      "scale": 3,
-      "sources": [
-        "https://www.nakedlife.com.au/pages/faq",
-        "https://www.danmurphys.com.au/product/DM_ER_2000004178_NL-COL/naked-life-naturally-sugar-free-soda-12x330ml-natural-cola-"
-      ]
-    },
-    {
-      "name": "Nexba",
-      "geo": "AU",
-      "galaxy": "drinks",
-      "product": "Sugar-free, naturally sweetened sodas, kombucha and gut-health drinks",
-      "positioning": "'Naturally sugar free' mass-market challenger",
-      "target": "Price-conscious AU grocery shoppers wanting healthier soft drinks",
-      "differentiation": "Early AU mover (Product of the Year 2017) with own natural sweetener systems",
-      "channels": "AU grocery (Coles partnership history), pharmacy, export attempts (UK Sainsbury's)",
-      "vc_take": "A lesson asset as much as an opportunity: early lead, broad portfolio, but squeezed between Remedy's fermentation credibility and private label. Shows brand focus beats SKU sprawl in beverage.",
-      "signal": "Founded 2010; national distribution; Product of the Year 2017 — company-reported",
-      "status": "independent",
-      "scale": 2,
-      "sources": [
-        "https://nexba.com/"
-      ]
-    },
-    {
-      "name": "Bobby",
-      "geo": "AU",
-      "galaxy": "drinks",
-      "product": "Better-for-you cola and soft drinks (sugar-free, prebiotic)",
-      "positioning": "An irreverent Aussie 'new Coke' for the post-sugar generation",
-      "target": "Gen Z / young millennial AU convenience and grocery buyers",
-      "differentiation": "Brand-as-personality in a functional category; running the Poppi cultural playbook in AU",
-      "channels": "AU convenience, independents, grocery rollout",
-      "vc_take": "If the US arc (Poppi/OLIPOP) predicts AU with a 2–3 year lag, the AU window for a breakout healthy soda brand is open right now — Bobby is the most culture-forward contender in it.",
-      "signal": "Early-stage; expanding AU distribution — company-reported, unverified scale",
-      "status": "independent",
-      "scale": 1,
-      "sources": [
-        "https://nexba.com/"
-      ]
-    },
-    {
-      "name": "StrangeLove",
-      "geo": "AU",
-      "galaxy": "drinks",
-      "product": "Premium craft sodas, tonics and lo-cal mixers",
-      "positioning": "Design-led, adult, lower-sugar refreshment — taste-first credibility",
-      "target": "Premium AU hospitality and grocery; cocktail/non-alc crossover",
-      "differentiation": "Wins on taste and design rather than functional claims — hospitality channel beachhead big brands can't fake",
-      "channels": "On-premise (bars/restaurants), premium grocery, DTC",
-      "vc_take": "The 'taste-maximalist' end of the barbell: no health claims to defend, premium price realisation, and a hospitality moat. Smaller outcome probability-weighted, but durable brand equity.",
-      "signal": "Established premium distribution in AU hospitality and grocery — company-reported, unverified scale",
-      "status": "independent",
-      "scale": 2,
-      "sources": [
-        "https://strangelove.com.au/"
-      ]
-    },
-    {
-      "name": "BelliWelli",
-      "geo": "US",
-      "galaxy": "gut",
-      "product": "Gut-friendly, low-FODMAP snack bars and gut-health products",
-      "positioning": "'Hot girls have IBS' — destigmatising digestive health with humour",
-      "target": "Women with IBS/digestive issues (≈1 in 5 adults), Gen Z wellness",
-      "differentiation": "Community-first growth: viral billboards and TikTok built the brand before retail did",
-      "channels": "DTC, Amazon, expanding US retail (Target, Sprouts)",
-      "vc_take": "The cleanest example of an underserved-condition wedge becoming a lifestyle brand. $10M Series B off viral organic growth — the CAC profile every DTC food brand claims and few have.",
-      "signal": "$10M Series B (Oct 2024); ~$26M total raised — verified",
-      "status": "independent",
-      "scale": 2,
-      "sources": [
-        "https://www.nosh.com/news/2023/going-with-their-gut-belliwelli-raises-15-4m/",
-        "https://www.crunchbase.com/organization/belliwelli"
-      ]
-    },
-    {
-      "name": "Fodbods",
-      "geo": "AU",
-      "galaxy": "gut",
-      "product": "Low-FODMAP, gut-friendly snack bars and protein bars",
-      "positioning": "Science-certified safe snacking for sensitive stomachs (Monash FODMAP heritage country)",
-      "target": "Australians with IBS and food intolerances",
-      "differentiation": "Australia invented the low-FODMAP framework (Monash University) — local credibility moat; angel-backed by Scale Investors",
-      "channels": "DTC, AU pharmacy and health retail, Coles",
-      "vc_take": "BelliWelli's thesis with an unfair Australian advantage: Monash is the global FODMAP authority. A small cheque with a clear US-expansion narrative riding clinical credibility.",
-      "signal": "Seed funding from Scale Investors (AU angel network) — verified investor, undisclosed amount",
-      "status": "independent",
-      "scale": 1,
-      "sources": [
-        "https://scaleinvestors.com.au/fodbods",
-        "https://www.crunchbase.com/organization/fodbods"
-      ]
-    },
-    {
-      "name": "Sweet Loren's",
-      "geo": "US",
-      "galaxy": "gut",
-      "product": "Allergen-free, gluten-free refrigerated cookie dough and pastry",
-      "positioning": "'Everyone deserves a delicious cookie' — top-14-allergen-free indulgence",
-      "target": "Allergy households (an entire family switches when one member must), celiac consumers",
-      "differentiation": "Owns the refrigerated dough niche incumbents ignored; founder survivor story drives authentic brand trust",
-      "channels": "30,000+ US grocery doors incl. mainstream chains (company-reported)",
-      "vc_take": "Allergen-free is bought by the household, not the individual — basket-level loyalty with near-zero churn. Quietly one of the best repeat-purchase profiles in the whole map.",
-      "signal": "National US grocery distribution; largely founder-controlled — company-reported",
-      "status": "independent",
-      "scale": 3,
-      "sources": [
-        "https://sweetlorens.com/"
-      ]
-    },
-    {
-      "name": "Goodles",
-      "geo": "US",
-      "galaxy": "comfort",
-      "product": "Protein- and veggie-boosted boxed mac & cheese and noodles",
-      "positioning": "'Noodles, gooder' — upgrading the most nostalgic box in the pantry",
-      "target": "Millennial parents and comfort-food eaters who read labels",
-      "differentiation": "14g protein + hidden veg in a true Kraft-blue-box taste experience; celebrity co-founder (Gal Gadot) used sparingly",
-      "channels": "Target, Walmart, Whole Foods, Amazon",
-      "vc_take": "L Catterton-backed shot at a $9B sleepy aisle. Mac & cheese has guaranteed household penetration — the bet is purely on conversion and velocity, not behaviour change. That's the right kind of CPG bet.",
-      "signal": "$19.4M raised ($13M Series A, Sep 2023, L Catterton) — verified",
-      "status": "independent",
-      "scale": 2,
-      "sources": [
-        "https://tracxn.com/d/companies/goodles/__1irEr3Q7VA2NPaj9U6czeVl395pPojGxYiP6B6nyvjE",
-        "https://kofirm.com/ko-client-goodles-raises-13m-series-a-funding-round"
-      ]
-    },
-    {
-      "name": "immi",
-      "geo": "US",
-      "galaxy": "comfort",
-      "product": "High-protein, low-carb instant ramen",
-      "positioning": "The ramen you loved at uni, re-engineered for adult macros",
-      "target": "Asian-American and mainstream millennial comfort-food eaters; keto/low-carb",
-      "differentiation": "First credible BFY entry in a 100B-serving global category; founders are ex-tech operators (Kevin Lee, Kevin Chanthasiriphan) with cultural authenticity",
-      "channels": "DTC-first, Amazon, Whole Foods, Target",
-      "vc_take": "Ramen is one of the most habitual, highest-frequency foods on earth with zero healthy incumbent. If immi nails taste parity, the repeat-purchase math beats almost any snack on this map.",
-      "signal": "~$29M raised over 4 rounds; latest round Dec 2024 (Tracxn) — verified",
-      "status": "independent",
-      "scale": 2,
-      "sources": [
-        "https://tracxn.com/d/companies/immi/__EMasZuzHw4mQqrxj1OSCqt7ZzKyJVzVv-dCapsRuRko"
-      ]
-    },
-    {
-      "name": "Mingle",
-      "geo": "AU",
-      "galaxy": "comfort",
-      "product": "Natural, low-sugar seasonings, sauces and gravies",
-      "positioning": "'No nasties' flavour staples — clean-label everyday cooking, not dieting",
-      "target": "AU home cooks and parents replacing legacy sauce brands",
-      "differentiation": "Took on AU's most concentrated grocery duopoly shelf (sauces/seasonings) and won national ranging in both majors",
-      "channels": "Woolworths and Coles nationally, DTC",
-      "vc_take": "Pantry staples are the stickiest repeat purchase in food. Mingle proved an indie can displace incumbent sauce brands in the world's most consolidated grocery market — rare velocity evidence.",
-      "signal": "National Woolworths + Coles ranging; early accelerator funding only (PitchBook/Crunchbase) — verified distribution",
-      "status": "independent",
-      "scale": 2,
-      "sources": [
-        "https://www.mingleseasoning.com/",
-        "https://australia.incorp.asia/cooking-up-growth-mingle-seasonings-recipe-for-financial-success/"
-      ]
-    },
-    {
-      "name": "Siete Foods",
-      "geo": "US",
-      "galaxy": "comfort",
-      "product": "Grain-free tortillas, chips, salsas and Mexican-American heritage foods",
-      "positioning": "Family-story-led, grain-free comfort food ('Juntos es Mejor')",
-      "target": "Health-conscious households + Mexican-American heritage consumers",
-      "differentiation": "Authentic family founding story (7 Garza family members) + allergen-conscious formulation in a giant everyday category",
-      "channels": "National US grocery and mass",
-      "vc_take": "The exit comp for clean-label comfort: PepsiCo paid $1.2B in 2024. Proof that heritage + health + family story is an acquirable combination at scale.",
-      "signal": "Acquired by PepsiCo for $1.2B (announced 2024) — verified",
-      "status": "exited",
-      "scale": 5,
-      "sources": [
-        "https://www.fooddive.com/news/hershey-to-buy-heathier-snacks-maker-lesserevil/744388/",
-        "https://www.prnewswire.com/news-releases/the-hershey-company-announces-intent-to-acquire-lesserevil-302420053.html"
-      ]
-    },
-    {
-      "name": "LesserEvil",
-      "geo": "US",
-      "galaxy": "comfort",
-      "product": "Organic popcorn, puffs and 'Space Balls' snacks (coconut-oil popped)",
-      "positioning": "Mindful, organic snacking with playful cosmic branding",
-      "target": "Natural-channel families trading up from conventional salty snacks",
-      "differentiation": "Owns its manufacturing (rare for indie CPG) — margin and innovation-speed advantage that made it acquirable",
-      "channels": "National US natural + mass retail",
-      "vc_take": "The 2025 exit that priced clean-label salty snacks: Hershey paid ~$750M (WSJ). Note WHY it won: self-manufacturing. Supply-chain ownership is the recurring moat across this map's biggest outcomes.",
-      "signal": "Acquired by Hershey, ~$750M reported (closed Nov 2025) — verified deal, price per WSJ report",
-      "status": "exited",
-      "scale": 4,
-      "sources": [
-        "https://www.fooddive.com/news/hershey-closes-lesserevil-acquisition-as-it-looks-to-lead-the-future-of-sn/805814/",
-        "https://www.prnewswire.com/news-releases/hershey-completes-acquisition-of-lesserevil-expanding-consumer-choice-302619516.html"
-      ]
-    },
-    {
-      "name": "Feastables",
-      "geo": "US",
-      "galaxy": "culture",
-      "product": "Chocolate bars with simplified ingredient lists",
-      "positioning": "MrBeast's chocolate — creator audience converted to shelf velocity",
-      "target": "Gen Z / Gen Alpha; gifting and impulse purchase",
-      "differentiation": "200M+ subscriber distribution engine; 'cleaner than Hershey's' ingredient framing without health-brand pricing",
-      "channels": "Walmart-led mass retail (deliberately not DTC)",
-      "vc_take": "$0 to $250M revenue in under 3 years, profitably, by skipping DTC entirely and putting creator media behind Walmart shelf. The most important distribution lesson on this map — and the most key-person-dependent asset on it.",
-      "signal": "~$250M 2024 revenue, ~$20M profit; ~$520M projected 2025 (reported) — credible third-party reporting, not audited",
-      "status": "independent",
-      "scale": 4,
-      "sources": [
-        "https://femfounded.org/case-studies/feastables/",
-        "https://arthnova.com/mrbeast-feastables-walmart-youtube-physical-shelves/"
-      ]
-    },
-    {
-      "name": "Twisted Healthy Treats",
-      "geo": "AU",
-      "galaxy": "culture",
-      "product": "Lower-sugar, hidden-veg kids' frozen treats and ice creams",
-      "positioning": "Treats parents say yes to — kid-tested taste, school-canteen compliant",
-      "target": "AU parents; school canteens (traffic-light food policies)",
-      "differentiation": "Canteen-compliance as a regulatory moat: AU school food policies effectively mandate products like this",
-      "channels": "AU grocery, school canteens, food service",
-      "vc_take": "Kids' BFY is bought on rules, not willpower — school policy is a built-in B2B2C channel US brands don't have. Small today, but the structural demand is legislated.",
-      "signal": "AU grocery + canteen distribution — company-reported, unverified scale",
-      "status": "independent",
-      "scale": 1,
-      "sources": [
-        "https://twistedhealthytreats.com.au/"
-      ]
-    },
-    {
-      "name": "Blue Dinosaur",
-      "geo": "AU",
-      "galaxy": "culture",
-      "product": "Paleo-style real-food bars and kids' lunchbox snacks",
-      "positioning": "Sunshine-coast real-food energy — minimal ingredients, lunchbox-safe lines",
-      "target": "Active AU families; surf/outdoor lifestyle consumers",
-      "differentiation": "Lifestyle-brand identity (surf culture) in a category of clinical macro brands; school-safe SKUs",
-      "channels": "Woolworths, Coles, AU convenience, export",
-      "vc_take": "Demonstrates the AU pattern: lifestyle authenticity over functional claims. A consolidation candidate — the AU bar shelf has too many subscale brands and someone will roll it up.",
-      "signal": "National AU grocery distribution — company-reported, unverified scale",
-      "status": "independent",
-      "scale": 1,
-      "sources": [
-        "https://bluedinosaur.com.au/"
-      ]
-    }
-  ]
+  {
+   "id": "sugarfree",
+   "name": "Sweet, Without the Sugar",
+   "tagline": "Candy, chocolate and dessert with the regret removed.",
+   "need_state": "I refuse to give up sweets. Take out the sugar, not the joy.",
+   "why_care": "Sugar is the single most avoided ingredient in both the US and Australia. The unlock was taste parity plus fun branding: these brands sell in the candy aisle and at the chemist, not the diet aisle.",
+   "maturity": "Scaling → Crowded (gummies)",
+   "vc_attractiveness": "Medium-High",
+   "risks": "Sweetener fatigue (sugar alcohols, stevia aftertaste); private label moves fast; single-hero-SKU concentration.",
+   "color": "#e84393",
+   "x": 68,
+   "y": 22
+  },
+  {
+   "id": "drinks",
+   "name": "Functional Refreshment",
+   "tagline": "Soda rebuilt: prebiotics, no sugar, real flavour.",
+   "need_state": "I want the ritual of a Coke without drinking a Coke.",
+   "why_care": "The category that proved BFY indulgence is venture-scale: Poppi exited to PepsiCo for $1.95B and OLIPOP was last valued at $1.85B. Australia is running the same playbook 2–3 years behind the US.",
+   "maturity": "Crowded (US) / Scaling (AU)",
+   "vc_attractiveness": "Medium (US) / High (AU)",
+   "risks": "US shelf is saturated post-Poppi; flavour/format copycats; big-soda response (Coke Simply Pop); prebiotic claims litigation.",
+   "color": "#00b8d4",
+   "x": 46,
+   "y": 64
+  },
+  {
+   "id": "gut",
+   "name": "Gut Health & Free-From",
+   "tagline": "Indulgence engineered for sensitive stomachs and allergies.",
+   "need_state": "I want to eat like everyone else without paying for it later.",
+   "why_care": "Gut health is the fastest-growing wellness claim, and GLP-1 users need fibre and digestive support. Free-from brands win fierce loyalty because the alternative for these consumers is exclusion, not another brand.",
+   "maturity": "Emerging",
+   "vc_attractiveness": "High",
+   "risks": "Niche-to-mass leap is hard; medical-adjacent claims invite regulator attention; low-FODMAP is a small beachhead.",
+   "color": "#9c27b0",
+   "x": 82,
+   "y": 55
+  },
+  {
+   "id": "comfort",
+   "name": "Clean-Label Comfort",
+   "tagline": "Mac & cheese, ramen, tacos and snacks, with the label cleaned up.",
+   "need_state": "I want childhood comfort food I don't have to hide in my pantry.",
+   "why_care": "Nostalgia is the cheapest customer acquisition there is. Upgrading an existing habit (ramen, mac & cheese, popcorn) beats inventing a new one, and acquirers agree: Siete went for $1.2B, LesserEvil for ~$750M.",
+   "maturity": "Scaling",
+   "vc_attractiveness": "High",
+   "risks": "Premium price vs. $1 incumbent comparison; velocity pressure in mainstream grocery; 'clean label' is unregulated language.",
+   "color": "#ffc107",
+   "x": 17,
+   "y": 56
+  },
+  {
+   "id": "culture",
+   "name": "Culture-Led & Kids' Treats",
+   "tagline": "Audience-first brands and lunchbox-safe indulgence.",
+   "need_state": "I buy the story (or my kids' lunchbox rules decide for me).",
+   "why_care": "Distribution is the moat: creators bring their own. Feastables hit $250M revenue in under three years off MrBeast's audience. Meanwhile parents are an underserved, rule-driven buyer (school policies, sugar limits) with high repeat purchase.",
+   "maturity": "Emerging",
+   "vc_attractiveness": "Medium",
+   "risks": "Key-person risk on creator brands; kids' marketing regulation; novelty purchase vs. true repeat.",
+   "color": "#4caf50",
+   "x": 70,
+   "y": 82
+  }
+ ],
+ "companies": [
+  {
+   "name": "David",
+   "geo": "US",
+   "galaxy": "protein",
+   "product": "28g-protein, 0g-sugar, 150-calorie bars, now also frozen dessert and ready-to-drink shakes",
+   "positioning": "The most efficient protein per calorie, branded like a luxury object, not a supplement",
+   "target": "Protein-first consumers and GLP-1 users who treat macros as a daily budget",
+   "differentiation": "Vertical ingredient control: it used its Series A to buy Epogee, sole supplier of the EPG fat replacer behind its calorie math",
+   "channels": "DTC-first, now 35,000+ retail locations including Walmart, Target and Costco",
+   "vc_take": "Category-defining velocity: ~$100M revenue in year one, then a 3x step-up to $2.25B sixteen months after the Series A, and a supply-chain moat most CPG brands never build. The founder set (Peter Rahal, ex-RXBAR) is the operator archetype this thesis bets on.",
+   "signal": "$250M Series B at a $2.25B valuation (Sep 2026) for parent Medici Brands, co-led by Greenoaks and Valor; follows the $75M Series A at $725M (May 2025); verified",
+   "status": "breakout",
+   "scale": 5,
+   "sources": [
+    "https://www.prnewswire.com/news-releases/medici-brands-raises-250-million-in-series-b-funding-302867137.html",
+    "https://www.businesswire.com/news/home/20250529749264/en/David-Closes-$75-Million-Series-A-Funding-Round",
+    "https://fortune.com/2025/10/13/david-protein-bars-rx-venture-food-startups-cod/"
+   ]
+  },
+  {
+   "name": "Chomps",
+   "geo": "US",
+   "galaxy": "protein",
+   "product": "Grass-fed beef, venison and turkey meat sticks",
+   "positioning": "Clean-ingredient protein snacking for everyone, not just hunters and gym-goers",
+   "target": "Whole30 / paleo / protein-conscious mainstream shoppers, increasingly GLP-1 users",
+   "differentiation": "Ingredient discipline plus near-bootstrapped capital efficiency; founders still control the company",
+   "channels": "Started DTC/Amazon; now mass retail (Costco, Target, Walmart, c-stores)",
+   "vc_take": "The bear case for venture in this category: ~$900M revenue built with almost no dilution. Proof the category creates real businesses, and a warning that the best operators may not need your cheque.",
+   "signal": "Est. ~$900M 2025 revenue (Forbes estimate); $100M credit line with Wells Fargo (Apr 2025); estimate + verified facility",
+   "status": "independent",
+   "scale": 5,
+   "sources": [
+    "https://www.inc.com/christopher-yang/how-a-meat-stick-brand-built-on-6500-reached-500-million/91281289",
+    "https://www.globenewswire.com/news-release/2025/04/24/3067482/0/en/Chomps-Secures-100-Million-Revolving-Line-of-Credit-with-Wells-Fargo.html"
+   ]
+  },
+  {
+   "name": "Magic Spoon",
+   "geo": "US",
+   "galaxy": "protein",
+   "product": "High-protein, zero-sugar 'childhood' cereal and treats",
+   "positioning": "Saturday-morning nostalgia for adults with macros",
+   "target": "Millennials who quit cereal for health reasons but miss it",
+   "differentiation": "First to make protein taste like Froot Loops; strong podcast/creator DTC engine before retail",
+   "channels": "DTC-led launch, now Target, Walmart, Costco, Amazon",
+   "vc_take": "Textbook DTC-to-retail transition and proof that 'remake a nostalgic aisle' works, but also a case study in how CAC-heavy DTC growth must convert to retail velocity to justify ~$209M raised.",
+   "signal": "~$209M total funding across 5 rounds (Tracxn); $85M round in 2022 alongside Target launch; verified",
+   "status": "independent",
+   "scale": 4,
+   "sources": [
+    "https://tracxn.com/d/companies/magic-spoon/__1enHSEZ23o_smWdM-7M8hNC-v63fHmYYTubxCLk_viA",
+    "https://www.fooddive.com/news/magic-spoon-raises-85m-better-for-you-cereal-retail/625417/"
+   ]
+  },
+  {
+   "name": "Khloud",
+   "geo": "US",
+   "galaxy": "protein",
+   "product": "Protein popcorn (7g protein per serve)",
+   "positioning": "Celebrity-founded everyday protein snacking",
+   "target": "Mass Target shoppers; Kardashian audience crossover",
+   "differentiation": "Day-one national distribution via celebrity leverage; popcorn as an unclaimed protein format",
+   "channels": "Target nationwide at launch, expanding mass retail",
+   "vc_take": "A live experiment in whether celebrity distribution can substitute for brand-building. Watch repeat purchase, not launch velocity. That's the entire question with talent-led CPG.",
+   "signal": "$12M oversubscribed round (Apr 2025): Serena Ventures, WME, Shrug, K5; verified",
+   "status": "independent",
+   "scale": 2,
+   "sources": [
+    "https://techcrunch.com/2025/04/22/khloe-kardashian-launches-consumer-brand-backed-by-serena-ventures-wme/",
+    "https://athletechnews.com/khloe-kardashians-khloud-lands-15m-in-funding-for-high-protein-popcorn/"
+   ]
+  },
+  {
+   "name": "Macro Mike",
+   "geo": "AU",
+   "galaxy": "protein",
+   "product": "Plant-based protein powders, baking mixes and peanut-butter treats",
+   "positioning": "Dessert-flavoured plant protein with a gut-health angle",
+   "target": "Australian wellness consumers; dairy-avoiders who still want brownies",
+   "differentiation": "Built a dessert-first plant protein brand from Burleigh Heads with zero external capital",
+   "channels": "DTC-led, plus AU health retail and export",
+   "vc_take": "The AU capital-efficiency archetype: 35+ staff, self-funded since 2016. Interesting both as a scaled bootstrapper and as a signal that AU BFY brands historically grew without venture. That's changing.",
+   "signal": "Self-funded; 35+ staff (Business News Australia); company-reported",
+   "status": "independent",
+   "scale": 3,
+   "sources": [
+    "https://www.businessnewsaustralia.com/articles/macro-mike-growth-pushed-by-passion-and-peanuts.html"
+   ]
+  },
+  {
+   "name": "Vitawerx",
+   "geo": "AU",
+   "galaxy": "protein",
+   "product": "Protein-coated chocolate, wafers and choc-coated nuts",
+   "positioning": "'Healthy never tasted so good', chocolate-first, protein hidden inside",
+   "target": "AU gym-adjacent consumers and health-store shoppers trading up from candy bars",
+   "differentiation": "Owns the protein-chocolate niche in AU health retail; broad SKU range across formats",
+   "channels": "AU health food stores, supplement retail, pharmacy, export to NZ",
+   "vc_take": "Australia's answer to the 'candy-coded protein' trend, pre-institutional-capital. Exactly the profile a US growth fund hunting a 'David of Australia' narrative would screen.",
+   "signal": "Founded 2015; nationally distributed in AU health retail; no disclosed external funding; company-reported",
+   "status": "independent",
+   "scale": 2,
+   "sources": [
+    "https://vitawerx.com/pages/about-us"
+   ]
+  },
+  {
+   "name": "Chief Nutrition",
+   "geo": "AU",
+   "galaxy": "protein",
+   "product": "Grass-fed collagen protein bars, biltong and collagen powders",
+   "positioning": "Real-food protein for health-span, co-founded by a nutritionist and trainers",
+   "target": "Paleo/whole-food Australians; CrossFit and longevity communities",
+   "differentiation": "Whole-food ingredient list in a category full of isolates and syrups; founder credibility in fitness media",
+   "channels": "DTC, Woolworths/health retail, gyms; raised via Equitise equity crowdfunding",
+   "vc_take": "Community-funded with a profitable ~A$4M run-rate. Small, but the crowdfunding cap table is itself a brand-love signal. A seed-stage bet on the 'meat-snack-meets-collagen' wedge in AU.",
+   "signal": "~A$4M annual revenue run-rate, profitable, revenue doubled YoY (Equitise raise materials); company-reported",
+   "status": "independent",
+   "scale": 1,
+   "sources": [
+    "https://www.equitise.com/offer/chief2023-offer/"
+   ]
+  },
+  {
+   "name": "NOON",
+   "geo": "AU",
+   "galaxy": "protein",
+   "product": "Ready-to-drink liquid breakfast in a can made with real milk and whole oats: 20g protein, 5g fibre, 0g added sugar (US formula; the AU launch formula is 18g protein, 6g fibre)",
+   "positioning": "Breakfast, not a protein shake: a whole-family breakfast occasion in a can, sold on protein, fibre and fullness rather than weight loss",
+   "target": "Busy families and commuters who skip breakfast or default to coffee and a bar",
+   "differentiation": "Owns an occasion instead of a macro. The founders call liquid breakfast the wedge into the wider breakfast category and deliberately stay out of the meal-replacement and GLP-1 framing",
+   "channels": "Woolworths nationally in Australia (Jan 2026), then about 2,000 Target stores plus Target.com in the US (Aug 2026); natural grocery, more mass retail and convenience planned for 2027",
+   "vc_take": "The sharpest channel sequencing on the map: prove the product in one concentrated AU grocery partner, then take that story into a single US mass retailer rather than spreading thin. Breakfast is a daily habit, which is the repeat-purchase profile this thesis rewards. What I'd want to see: units per store per week at Target, and how fast the next channel (natural or convenience) opens once that number is known.",
+   "signal": "$2.5M pre-seed led by BFG Partners with RiverPark and Habitat Partners (2026); national Woolworths and ~2,000-store Target launches; verified",
+   "status": "independent",
+   "scale": 2,
+   "sources": [
+    "https://www.foodbusinessnews.net/articles/31005-noon-reimagining-the-breakfast-occasion",
+    "https://www.nosh.com/pr/2026/08/04/noon-launches-nationwide-at-target-introducing-americas-first-breakfast-in-a-can",
+    "https://insidefmcg.com.au/2026/01/12/noon-makes-national-debut-in-woolworths-with-on-the-go-breakfast-drinks/"
+   ]
+  },
+  {
+   "name": "FUNDAY Natural Sweets",
+   "geo": "AU",
+   "galaxy": "sugarfree",
+   "product": "No-added-sugar, prebiotic-fibre gummies and chocolate",
+   "positioning": "Proper lollies, zero guilt, fun-first branding, not diet branding",
+   "target": "AU snackers and ex-candy-lovers; expanding to US",
+   "differentiation": "No sugar alcohols (the SmartSweets gut-complaint weakness) and 7g prebiotic fibre per serve; chemist-channel beachhead",
+   "channels": "Chemist Warehouse nationwide, Coles/Woolworths, Amazon AU, now US entry (fundaysweets.us)",
+   "vc_take": "The single most exportable AU brand on this map. Ran the SmartSweets playbook with a better formulation and a pharmacy channel insight. Its US expansion is the trade I'd want to underwrite.",
+   "signal": "Bootstrapped at launch (founder stated no external funding plans, 2022); national Chemist Warehouse + grocery distribution; US site live; verified distribution, funding status company-reported",
+   "status": "independent",
+   "scale": 2,
+   "sources": [
+    "https://www.foodnavigator-asia.com/Article/2022/01/05/Better-for-you-candy-Australia-s-Funday-outlines-domestic-and-international-expansion-strategy/",
+    "https://www.fundaysweets.us/"
+   ]
+  },
+  {
+   "name": "SmartSweets",
+   "geo": "NA",
+   "galaxy": "sugarfree",
+   "product": "Low-sugar gummies and candy",
+   "positioning": "'Kick sugar, keep candy'",
+   "target": "Mainstream North American candy buyers cutting sugar",
+   "differentiation": "First mover at scale in low-sugar candy; founder-story-led brand (Tara Bosch, started at 21)",
+   "channels": "Mass retail across North America",
+   "vc_take": "The category's first big exit comp: TPG took majority control at $360M in 2020, four years from founding. Defines both the upside and the ceiling question: was that a venture outcome or a great PE outcome?",
+   "signal": "Majority stake sold to TPG Growth at $360M (Oct 2020); verified",
+   "status": "exited",
+   "scale": 4,
+   "sources": [
+    "https://www.nosh.com/news/2020/smart-money-smartsweets-sells-to-tpg-brings-on-new-ceo/"
+   ]
+  },
+  {
+   "name": "Noshu",
+   "geo": "AU",
+   "galaxy": "sugarfree",
+   "product": "Sugar-free donuts, baking mixes, frostings and chocolate ('Snackles')",
+   "positioning": "Real dessert experiences, donuts, not 'diet bars', with 97–99% less sugar",
+   "target": "AU supermarket shoppers, diabetics, low-carb households",
+   "differentiation": "Proprietary sweetener systems built over a decade; owns the sugar-free bakery shelf in Coles/Woolworths",
+   "target_note": "",
+   "channels": "Coles, Woolworths, export plans (UK, EU, China)",
+   "vc_take": "A$4M to A$38M in four years inside mainstream grocery, now raising its first external round for international expansion, a rare AU growth-equity entry point with proven velocity data.",
+   "signal": "~A$38M expected sales; first external raise underway; projecting 2.5x in 3 years (SmartCompany / company); company-reported",
+   "status": "independent",
+   "scale": 3,
+   "sources": [
+    "https://www.smartcompany.com.au/entrepreneurs/australian-brand-noshu-grew-4-million-revenue-to-40-million-in-four-years/"
+   ]
+  },
+  {
+   "name": "Mid-Day Squares",
+   "geo": "NA",
+   "galaxy": "sugarfree",
+   "product": "Functional chocolate squares (protein + fibre, low sugar)",
+   "positioning": "'Chocolate that works as hard as you', built in public on social",
+   "target": "Millennial/Gen Z snackers who follow the founders' content",
+   "differentiation": "The founders ARE the media channel: daily behind-the-scenes content turned a chocolate bar into a show",
+   "channels": "Whole Foods + natural channel US/Canada, DTC",
+   "vc_take": "Best-in-class example of founder-as-distribution: organic content replacing paid CAC. The question is whether content-led love converts to mainstream velocity beyond the natural channel.",
+   "signal": "~$16.5M raised over 3 rounds (Tracxn/Crunchbase); verified",
+   "status": "independent",
+   "scale": 2,
+   "sources": [
+    "https://www.crunchbase.com/organization/mid-day-squares",
+    "https://tracxn.com/d/companies/mid-day-squares/__3S6aXZP2tLgypq6g1A0SvwJuzm-BdOCkrO0DAu-8hWg"
+   ]
+  },
+  {
+   "name": "Denada",
+   "geo": "AU",
+   "galaxy": "sugarfree",
+   "product": "Sugar-free ice cream",
+   "positioning": "Indulgent ice cream, zero sugar, no asterisks on taste",
+   "target": "AU households cutting sugar; diabetic and keto consumers",
+   "differentiation": "First-mover in AU sugar-free ice cream; built distribution to 1,250+ stores in three years with no outside capital",
+   "channels": "AU supermarkets and independents; first export markets",
+   "vc_take": "Frozen is the hardest BFY logistics problem (cold chain, slotting), and Denada cracked AU shelf bootstrapped. A capital injection here is a distribution-expansion bet, not a product bet.",
+   "signal": "1,250+ AU stores within 3 years, no outside investment at launch; now exporting; company-reported",
+   "status": "independent",
+   "scale": 2,
+   "sources": [
+    "https://www.foodanddrinkbusiness.com.au/news/denada-lands-its-first-export-market"
+   ]
+  },
+  {
+   "name": "OLIPOP",
+   "geo": "US",
+   "galaxy": "drinks",
+   "product": "Prebiotic soda with classic flavours (Vintage Cola, Root Beer)",
+   "positioning": "A new kind of soda: nostalgia + digestive health, science-forward",
+   "target": "Mass grocery shoppers replacing legacy soda",
+   "differentiation": "Deepest formulation credibility in the set (microbiome research roots); profitable at scale",
+   "channels": "Mass retail nationwide, DTC",
+   "vc_take": "The standing proof that BFY beverage is venture-scale and can be PROFITABLE: $400M+ sales, first profit in 2024, $1.85B valuation. The remaining question is exit path now that Pepsi bought its rival.",
+   "signal": "$50M raise at $1.85B valuation (Feb 2025); $400M+ 2024 sales; profitable; verified",
+   "status": "breakout",
+   "scale": 5,
+   "sources": [
+    "https://www.cnbc.com/2025/03/17/pepsico-buys-prebiotic-soda-brand-poppi-for-more-than-1point6-billion.html",
+    "https://www.marketingdive.com/news/pepsico-buys-poppi-2B-pepsi-purchase-prebiotic-healthy-soda-better-for-you-drink-olipop-simply-pop/742679/"
+   ]
+  },
+  {
+   "name": "Poppi",
+   "geo": "US",
+   "galaxy": "drinks",
+   "product": "Prebiotic soda (apple-cider-vinegar origin story)",
+   "positioning": "Soda's fun, social, brand-led comeback: Super Bowl ads and merch",
+   "target": "Gen Z and millennial ex-soda drinkers",
+   "differentiation": "Marketing velocity: TikTok-native brand building that outran a better-funded rival on cultural relevance",
+   "channels": "Mass retail, Amazon, DTC",
+   "vc_take": "The exit that validated the whole map: PepsiCo paid $1.95B in 2025 off ~$500M 2024 sales. Also a cautionary tale: prebiotic claims drew a class-action settlement before the deal closed.",
+   "signal": "Acquired by PepsiCo for $1.95B (Mar 2025); ~$500M 2024 sales; verified",
+   "status": "exited",
+   "scale": 5,
+   "sources": [
+    "https://www.pepsico.com/our-stories/press-release/pepsico-to-acquire-poppi03172025",
+    "https://www.cnn.com/2025/03/17/business/pepsi-buys-poppi/"
+   ]
+  },
+  {
+   "name": "Remedy Drinks",
+   "geo": "AU",
+   "galaxy": "drinks",
+   "product": "Live-cultured kombucha, prebiotic Sodaly, ACV switchel, shots",
+   "positioning": "Fermentation-led, no-sugar functional drinks from a Melbourne kitchen to 25,000 outlets",
+   "target": "Mainstream AU shoppers; expanding US/EU/Asia",
+   "differentiation": "Real fermentation at industrial scale; AU's #1 kombucha with L Catterton backing",
+   "channels": "25,000+ outlets in AU plus export; unified global entity from April 2025",
+   "vc_take": "Australia's functional-beverage anchor asset (~A$163M revenue). Its global consolidation move reads as exit grooming: the comp every AU beverage seed deal will be priced against.",
+   "signal": "~A$162.7M FY2025 revenue (IBISWorld); Series B from L Catterton & Kin Group (2023); verified",
+   "status": "breakout",
+   "scale": 4,
+   "sources": [
+    "https://www.ibisworld.com/australia/company/remedy-drinks-pty-ltd/461825/",
+    "https://www.prnewswire.com/news-releases/remedy-drinks-closes-series-b-funding-round-and-appoints-new-c-suite-sales-leader-to-accelerate-global-growth-301750480.html"
+   ]
+  },
+  {
+   "name": "Naked Life",
+   "geo": "AU",
+   "galaxy": "drinks",
+   "product": "100% natural sugar-free sodas and non-alcoholic cocktails/spirits",
+   "positioning": "Premium sugar-free refreshment without artificial sweeteners",
+   "target": "AU mainstream grocery + the sober-curious overlap",
+   "differentiation": "Straddles two need-states (no sugar + no alcohol) with one brand; national grocery from a 2016 kitchen start",
+   "channels": "Woolworths, Coles, IGA, Dan Murphy's",
+   "vc_take": "Quiet national distribution across both grocery AND liquor channels is a structural advantage no US healthy-soda brand has. An obvious platform for a US prebiotic-style line extension.",
+   "signal": "Stocked nationally in Woolworths, Coles, IGA, Dan Murphy's; founded 2016; company-reported",
+   "status": "independent",
+   "scale": 3,
+   "sources": [
+    "https://www.nakedlife.com.au/pages/faq",
+    "https://www.danmurphys.com.au/product/DM_ER_2000004178_NL-COL/naked-life-naturally-sugar-free-soda-12x330ml-natural-cola-"
+   ]
+  },
+  {
+   "name": "Nexba",
+   "geo": "AU",
+   "galaxy": "drinks",
+   "product": "Sugar-free, naturally sweetened sodas, kombucha and gut-health drinks",
+   "positioning": "'Naturally sugar free' mass-market challenger",
+   "target": "Price-conscious AU grocery shoppers wanting healthier soft drinks",
+   "differentiation": "Early AU mover (Product of the Year 2017) with own natural sweetener systems",
+   "channels": "AU grocery (Coles partnership history), pharmacy, export attempts (UK Sainsbury's)",
+   "vc_take": "A lesson asset as much as an opportunity: early lead, broad portfolio, but squeezed between Remedy's fermentation credibility and private label. Shows brand focus beats SKU sprawl in beverage.",
+   "signal": "Founded 2010; national distribution; Product of the Year 2017; company-reported",
+   "status": "independent",
+   "scale": 2,
+   "sources": [
+    "https://nexba.com/"
+   ]
+  },
+  {
+   "name": "Bobby",
+   "geo": "AU",
+   "galaxy": "drinks",
+   "product": "Better-for-you cola and soft drinks (sugar-free, prebiotic)",
+   "positioning": "An irreverent Aussie 'new Coke' for the post-sugar generation",
+   "target": "Gen Z / young millennial AU convenience and grocery buyers",
+   "differentiation": "Brand-as-personality in a functional category; running the Poppi cultural playbook in AU",
+   "channels": "AU convenience, independents, grocery rollout",
+   "vc_take": "If the US arc (Poppi/OLIPOP) predicts AU with a 2–3 year lag, the AU window for a breakout healthy soda brand is open right now, and Bobby is the most culture-forward contender in it.",
+   "signal": "Early-stage; expanding AU distribution; company-reported, unverified scale",
+   "status": "independent",
+   "scale": 1,
+   "sources": [
+    "https://nexba.com/"
+   ]
+  },
+  {
+   "name": "StrangeLove",
+   "geo": "AU",
+   "galaxy": "drinks",
+   "product": "Premium craft sodas, tonics and lo-cal mixers",
+   "positioning": "Design-led, adult, lower-sugar refreshment, taste-first credibility",
+   "target": "Premium AU hospitality and grocery; cocktail/non-alc crossover",
+   "differentiation": "Wins on taste and design rather than functional claims, with a hospitality channel beachhead big brands can't fake",
+   "channels": "On-premise (bars/restaurants), premium grocery, DTC",
+   "vc_take": "The 'taste-maximalist' end of the barbell: no health claims to defend, premium price realisation, and a hospitality moat. Smaller outcome probability-weighted, but durable brand equity.",
+   "signal": "Established premium distribution in AU hospitality and grocery; company-reported, unverified scale",
+   "status": "independent",
+   "scale": 2,
+   "sources": [
+    "https://strangelove.com.au/"
+   ]
+  },
+  {
+   "name": "BelliWelli",
+   "geo": "US",
+   "galaxy": "gut",
+   "product": "Gut-friendly, low-FODMAP snack bars and gut-health products",
+   "positioning": "'Hot girls have IBS', destigmatising digestive health with humour",
+   "target": "Women with IBS/digestive issues (≈1 in 5 adults), Gen Z wellness",
+   "differentiation": "Community-first growth: viral billboards and TikTok built the brand before retail did",
+   "channels": "DTC, Amazon, expanding US retail (Target, Sprouts)",
+   "vc_take": "The cleanest example of an underserved-condition wedge becoming a lifestyle brand. $10M Series B off viral organic growth: the CAC profile every DTC food brand claims and few have.",
+   "signal": "$10M Series B (Oct 2024); ~$26M total raised; verified",
+   "status": "independent",
+   "scale": 2,
+   "sources": [
+    "https://www.nosh.com/news/2023/going-with-their-gut-belliwelli-raises-15-4m/",
+    "https://www.crunchbase.com/organization/belliwelli"
+   ]
+  },
+  {
+   "name": "Fodbods",
+   "geo": "AU",
+   "galaxy": "gut",
+   "product": "Low-FODMAP, gut-friendly snack bars and protein bars",
+   "positioning": "Science-certified safe snacking for sensitive stomachs (Monash FODMAP heritage country)",
+   "target": "Australians with IBS and food intolerances",
+   "differentiation": "Australia invented the low-FODMAP framework (Monash University), a local credibility moat; angel-backed by Scale Investors",
+   "channels": "DTC, AU pharmacy and health retail, Coles",
+   "vc_take": "BelliWelli's thesis with an unfair Australian advantage: Monash is the global FODMAP authority. A small cheque with a clear US-expansion narrative riding clinical credibility.",
+   "signal": "Seed funding from Scale Investors (AU angel network); verified investor, undisclosed amount",
+   "status": "independent",
+   "scale": 1,
+   "sources": [
+    "https://scaleinvestors.com.au/fodbods",
+    "https://www.crunchbase.com/organization/fodbods"
+   ]
+  },
+  {
+   "name": "Sweet Loren's",
+   "geo": "US",
+   "galaxy": "gut",
+   "product": "Allergen-free, gluten-free refrigerated cookie dough and pastry",
+   "positioning": "'Everyone deserves a delicious cookie', top-14-allergen-free indulgence",
+   "target": "Allergy households (an entire family switches when one member must), celiac consumers",
+   "differentiation": "Owns the refrigerated dough niche incumbents ignored; founder survivor story drives authentic brand trust",
+   "channels": "30,000+ US grocery doors incl. mainstream chains (company-reported)",
+   "vc_take": "Allergen-free is bought by the household, not the individual: basket-level loyalty with near-zero churn. Quietly one of the best repeat-purchase profiles in the whole map.",
+   "signal": "National US grocery distribution; largely founder-controlled; company-reported",
+   "status": "independent",
+   "scale": 3,
+   "sources": [
+    "https://sweetlorens.com/"
+   ]
+  },
+  {
+   "name": "Goodles",
+   "geo": "US",
+   "galaxy": "comfort",
+   "product": "Protein- and veggie-boosted boxed mac & cheese and noodles",
+   "positioning": "'Noodles, gooder', upgrading the most nostalgic box in the pantry",
+   "target": "Millennial parents and comfort-food eaters who read labels",
+   "differentiation": "14g protein + hidden veg in a true Kraft-blue-box taste experience; celebrity co-founder (Gal Gadot) used sparingly",
+   "channels": "Target, Walmart, Whole Foods, Amazon",
+   "vc_take": "L Catterton-backed shot at a $9B sleepy aisle. Mac & cheese has guaranteed household penetration; the bet is purely on conversion and velocity, not behaviour change. That's the right kind of CPG bet.",
+   "signal": "$19.4M raised ($13M Series A, Sep 2023, L Catterton); verified",
+   "status": "independent",
+   "scale": 2,
+   "sources": [
+    "https://tracxn.com/d/companies/goodles/__1irEr3Q7VA2NPaj9U6czeVl395pPojGxYiP6B6nyvjE",
+    "https://kofirm.com/ko-client-goodles-raises-13m-series-a-funding-round"
+   ]
+  },
+  {
+   "name": "immi",
+   "geo": "US",
+   "galaxy": "comfort",
+   "product": "High-protein, low-carb instant ramen",
+   "positioning": "The ramen you loved at uni, re-engineered for adult macros",
+   "target": "Asian-American and mainstream millennial comfort-food eaters; keto/low-carb",
+   "differentiation": "First credible BFY entry in a 100B-serving global category; founders are ex-tech operators (Kevin Lee, Kevin Chanthasiriphan) with cultural authenticity",
+   "channels": "DTC-first, Amazon, Whole Foods, Target",
+   "vc_take": "Ramen is one of the most habitual, highest-frequency foods on earth with zero healthy incumbent. If immi nails taste parity, the repeat-purchase math beats almost any snack on this map.",
+   "signal": "~$29M raised over 4 rounds; latest round Dec 2024 (Tracxn); verified",
+   "status": "independent",
+   "scale": 2,
+   "sources": [
+    "https://tracxn.com/d/companies/immi/__EMasZuzHw4mQqrxj1OSCqt7ZzKyJVzVv-dCapsRuRko"
+   ]
+  },
+  {
+   "name": "Mingle",
+   "geo": "AU",
+   "galaxy": "comfort",
+   "product": "Natural, low-sugar seasonings, sauces and gravies",
+   "positioning": "'No nasties' flavour staples: clean-label everyday cooking, not dieting",
+   "target": "AU home cooks and parents replacing legacy sauce brands",
+   "differentiation": "Took on AU's most concentrated grocery duopoly shelf (sauces/seasonings) and won national ranging in both majors",
+   "channels": "Woolworths and Coles nationally, DTC",
+   "vc_take": "Pantry staples are the stickiest repeat purchase in food. Mingle proved an indie can displace incumbent sauce brands in the world's most consolidated grocery market: rare velocity evidence.",
+   "signal": "National Woolworths + Coles ranging; early accelerator funding only (PitchBook/Crunchbase); verified distribution",
+   "status": "independent",
+   "scale": 2,
+   "sources": [
+    "https://www.mingleseasoning.com/",
+    "https://australia.incorp.asia/cooking-up-growth-mingle-seasonings-recipe-for-financial-success/"
+   ]
+  },
+  {
+   "name": "Siete Foods",
+   "geo": "US",
+   "galaxy": "comfort",
+   "product": "Grain-free tortillas, chips, salsas and Mexican-American heritage foods",
+   "positioning": "Family-story-led, grain-free comfort food ('Juntos es Mejor')",
+   "target": "Health-conscious households + Mexican-American heritage consumers",
+   "differentiation": "Authentic family founding story (7 Garza family members) + allergen-conscious formulation in a giant everyday category",
+   "channels": "National US grocery and mass",
+   "vc_take": "The exit comp for clean-label comfort: PepsiCo paid $1.2B in 2024. Proof that heritage + health + family story is an acquirable combination at scale.",
+   "signal": "Acquired by PepsiCo for $1.2B (announced 2024); verified",
+   "status": "exited",
+   "scale": 5,
+   "sources": [
+    "https://www.fooddive.com/news/hershey-to-buy-heathier-snacks-maker-lesserevil/744388/",
+    "https://www.prnewswire.com/news-releases/the-hershey-company-announces-intent-to-acquire-lesserevil-302420053.html"
+   ]
+  },
+  {
+   "name": "LesserEvil",
+   "geo": "US",
+   "galaxy": "comfort",
+   "product": "Organic popcorn, puffs and 'Space Balls' snacks (coconut-oil popped)",
+   "positioning": "Mindful, organic snacking with playful cosmic branding",
+   "target": "Natural-channel families trading up from conventional salty snacks",
+   "differentiation": "Owns its manufacturing (rare for indie CPG), a margin and innovation-speed advantage that made it acquirable",
+   "channels": "National US natural + mass retail",
+   "vc_take": "The 2025 exit that priced clean-label salty snacks: Hershey paid ~$750M (WSJ). Note WHY it won: self-manufacturing. Supply-chain ownership is the recurring moat across this map's biggest outcomes.",
+   "signal": "Acquired by Hershey, ~$750M reported (closed Nov 2025); verified deal, price per WSJ report",
+   "status": "exited",
+   "scale": 4,
+   "sources": [
+    "https://www.fooddive.com/news/hershey-closes-lesserevil-acquisition-as-it-looks-to-lead-the-future-of-sn/805814/",
+    "https://www.prnewswire.com/news-releases/hershey-completes-acquisition-of-lesserevil-expanding-consumer-choice-302619516.html"
+   ]
+  },
+  {
+   "name": "Feastables",
+   "geo": "US",
+   "galaxy": "culture",
+   "product": "Chocolate bars with simplified ingredient lists",
+   "positioning": "MrBeast's chocolate: creator audience converted to shelf velocity",
+   "target": "Gen Z / Gen Alpha; gifting and impulse purchase",
+   "differentiation": "200M+ subscriber distribution engine; 'cleaner than Hershey's' ingredient framing without health-brand pricing",
+   "channels": "Walmart-led mass retail (deliberately not DTC)",
+   "vc_take": "$0 to $250M revenue in under 3 years, profitably, by skipping DTC entirely and putting creator media behind Walmart shelf. The most important distribution lesson on this map, and also the most key-person-dependent asset on it.",
+   "signal": "~$250M 2024 revenue, ~$20M profit; ~$520M projected 2025 (reported); credible third-party reporting, not audited",
+   "status": "independent",
+   "scale": 4,
+   "sources": [
+    "https://femfounded.org/case-studies/feastables/",
+    "https://arthnova.com/mrbeast-feastables-walmart-youtube-physical-shelves/"
+   ]
+  },
+  {
+   "name": "Twisted Healthy Treats",
+   "geo": "AU",
+   "galaxy": "culture",
+   "product": "Lower-sugar, hidden-veg kids' frozen treats and ice creams",
+   "positioning": "Treats parents say yes to: kid-tested taste, school-canteen compliant",
+   "target": "AU parents; school canteens (traffic-light food policies)",
+   "differentiation": "Canteen-compliance as a regulatory moat: AU school food policies effectively mandate products like this",
+   "channels": "AU grocery, school canteens, food service",
+   "vc_take": "Kids' BFY is bought on rules, not willpower: school policy is a built-in B2B2C channel US brands don't have. Small today, but the structural demand is legislated.",
+   "signal": "AU grocery + canteen distribution; company-reported, unverified scale",
+   "status": "independent",
+   "scale": 1,
+   "sources": [
+    "https://twistedhealthytreats.com.au/"
+   ]
+  },
+  {
+   "name": "Blue Dinosaur",
+   "geo": "AU",
+   "galaxy": "culture",
+   "product": "Paleo-style real-food bars and kids' lunchbox snacks",
+   "positioning": "Sunshine-coast real-food energy: minimal ingredients, lunchbox-safe lines",
+   "target": "Active AU families; surf/outdoor lifestyle consumers",
+   "differentiation": "Lifestyle-brand identity (surf culture) in a category of clinical macro brands; school-safe SKUs",
+   "channels": "Woolworths, Coles, AU convenience, export",
+   "vc_take": "Demonstrates the AU pattern: lifestyle authenticity over functional claims. A consolidation candidate: the AU bar shelf has too many subscale brands and someone will roll it up.",
+   "signal": "National AU grocery distribution; company-reported, unverified scale",
+   "status": "independent",
+   "scale": 1,
+   "sources": [
+    "https://bluedinosaur.com.au/"
+   ]
+  }
+ ]
 }
